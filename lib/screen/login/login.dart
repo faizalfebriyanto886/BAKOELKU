@@ -1,4 +1,5 @@
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/daftar/register.dart';
 import 'package:bakoelku/screen/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -141,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       TextButton(
-                        onPressed: null, 
+                        onPressed: ()=> Get.to(()=> const RegisterPageView()), 
                         child: Text(
                           "Daftar",
                           style: TextStyle(

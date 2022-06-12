@@ -1,5 +1,7 @@
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/setting/setting_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
@@ -23,16 +25,19 @@ class _HomeState extends State<Home> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10,top: 90),
-                    child: Container(
-                      padding: const EdgeInsets.all(9),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: meGreen),
-                        color: Colors.white
-                      ),
-                      child: Icon(
-                        Icons.settings,
-                        color: meGreen,
+                    child: GestureDetector(
+                      onTap:()=>  Get.to(()=>const  SettingPageView()),
+                      child: Container(
+                        padding: const EdgeInsets.all(9),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: meGreen),
+                          color: Colors.white
+                        ),
+                        child: Icon(
+                          Icons.settings,
+                          color: meGreen,
+                        ),
                       ),
                     ),
                   ),
