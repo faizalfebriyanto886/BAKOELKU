@@ -1,4 +1,7 @@
+import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -10,104 +13,150 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(0),
-        child: Column(
-          children: [
-            Container(
-              height: 400,
+    return Scaffold(
+      backgroundColor: meGreen,
+      body: Stack(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            height: 350,
+            child: Image.asset("assets/images/logo_bakoelku.png", height: 150,)
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 300),
+            child: Container(
               decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/background.png'),
-                  fit: BoxFit.fill,
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15)
                 )
               ),
-              child: Stack(
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: double.infinity,
+              child: ListView(
+                padding: const EdgeInsets.all(20),
                 children: [
-                  Positioned(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 50),
-                      child: const Center(
-                        child: Text(
-                          "Login", 
-                          style: TextStyle(
-                            color: Colors.white, 
-                            fontSize: 40, 
-                            fontWeight: FontWeight.bold
+                  Text( // Title Login
+                    "Login",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(                    
+                      color: meGreen,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 40,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: meGreen, 
+                            width: 2,
                           ),
                         ),
+                        hintText: "Isi email kamu disini...",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: meGreen,
+                        ),
                       ),
-	                  )
+                    ),
                   ),
+
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: meGreen, 
+                            width: 2,
+                          ),
+                        ),
+                        hintText: "Isi password kamu disini...",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.password_outlined,
+                          color: meGreen,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(         
+                      onPressed: null, 
+                      child: Text(
+                        "Lupa Password?",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal
+                        ),
+                      )
+                    ),
+                  ),
+
+                  GestureDetector( // Button Login
+                    onTap: () => Get.to(() => const Home()),
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: meGreen,
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: const Text(
+                        "Login",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      const Text(
+                        "Belum memiliki akun?",
+                        style: TextStyle(
+                          color: Colors.grey,
+
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: null, 
+                        child: Text(
+                          "Daftar",
+                          style: TextStyle(
+                            color: meGreen
+                          ),
+                        )
+                      )
+                    ],
+                  )
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(30),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromRGBO(143, 148, 251, .2),
-                          blurRadius: 20,
-                          offset: Offset(0, 10)
-                        )
-                      ]
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.white))
-                          ),
-                          child: const TextField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Phone number",
-                              hintStyle: TextStyle(
-                                color: Colors.grey
-                              )
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide(color: Colors.white))
-                          ),
-                          child: const TextField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Password",
-                              hintStyle: TextStyle(
-                                color: Colors.grey
-                              )
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+          )
+        ],
+      )
     );
   }
 }

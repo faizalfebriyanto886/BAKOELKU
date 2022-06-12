@@ -38,6 +38,9 @@ dependencies:
   sliding_sheet: ^0.5.2
   splash_screen_view: ^3.0.0
   carousel_slider: ^4.1.1
+  
+  # for state management
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
