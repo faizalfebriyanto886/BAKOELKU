@@ -1,5 +1,7 @@
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegisterPageView extends StatelessWidget {
   const RegisterPageView({Key? key}) : super(key: key);
@@ -16,22 +18,22 @@ class RegisterPageView extends StatelessWidget {
             child: Image.asset("assets/images/logo_bakoelku.png", height: 150,)
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 330),
+            padding: const EdgeInsets.only(top: 300),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              width: double.infinity,
-              decoration:  const BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50)
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15)
                 )
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: double.infinity,
+              child: ListView(
+                padding: const EdgeInsets.all(20),
                 children: [
-                  Text( // Title Register
-                    "Datar dulu yaa!!!!",
+                  Text( // Title Login
+                    "Registrasi",
                     textAlign: TextAlign.center,
                     style: TextStyle(                    
                       color: meGreen,
@@ -39,50 +41,104 @@ class RegisterPageView extends StatelessWidget {
                       fontWeight: FontWeight.w600
                     ),
                   ),
-                  fieldWidget(
-                    hintText: "Isi Username kamu disini.....",
-                    controller: null,
-                    icon: Icons.people
-                  ),
-                  fieldWidget(
-                    hintText: "Isi email kamu disini.....",
-                    controller: null,
-                    icon: Icons.mail
-                  ),
-                  fieldWidget(
-                    hintText: "Isi password kamu disini.....",
-                    controller: null,
-                    icon: Icons.lock
-                  ),
+                  
+                  const SizedBox(height: 40,),
                   Padding(
-                    padding: const EdgeInsets.only(left: 40, right: 40),
-                    child: SizedBox(
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding:const  EdgeInsets.all(40),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: meGreen, 
-                              width: 2,
-                            ),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: meGreen, 
+                            width: 2,
                           ),
-                          hintText: "Isi alamat kamu disini....",
-                          hintStyle: TextStyle(
-                            color: Colors.grey.withOpacity(0.7),
-                            fontSize: 14,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.location_city,
-                            color: meGreen,
-                          ),
+                        ),
+                        hintText: "Isi username kamu disini...",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: meGreen,
                         ),
                       ),
                     ),
                   ),
-                  GestureDetector( // Button daftar
-                    onTap:  null,
+
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: meGreen, 
+                            width: 2,
+                          ),
+                        ),
+                        hintText: "Isi email kamu disini...",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: meGreen,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: meGreen, 
+                            width: 2,
+                          ),
+                        ),
+                        hintText: "Isi password kamu disini...",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.password_outlined,
+                          color: meGreen,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: TextField(
+                      maxLength: 5,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: meGreen, 
+                            width: 2,
+                          ),
+                        ),
+                        hintText: "Isi alamat kamu disini...",
+                        hintStyle: TextStyle(
+                          color: Colors.grey.withOpacity(0.7),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20,),
+                  GestureDetector( // Button Login
+                    onTap: () => Get.to(() => const Home()),
                     child: Container(
-                      width: 300,
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: meGreen,
@@ -98,7 +154,7 @@ class RegisterPageView extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
+                  ),                  
                 ],
               ),
             ),

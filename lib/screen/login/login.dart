@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: meGreen, 
+                            color: buttonGreen, 
                             width: 2,
                           ),
                         ),
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         prefixIcon: Icon(
                           Icons.email,
-                          color: meGreen,
+                          color: buttonGreen,
                         ),
                       ),
                     ),
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: meGreen, 
+                            color: buttonGreen, 
                             width: 2,
                           ),
                         ),
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         prefixIcon: Icon(
                           Icons.password_outlined,
-                          color: meGreen,
+                          color: buttonGreen,
                         ),
                       ),
                     ),
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: meGreen,
+                        color: buttonGreen,
                         borderRadius: BorderRadius.circular(10)
                       ),
                       child: const Text(
@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Daftar",
                           style: TextStyle(
-                            color: meGreen
+                            color: buttonGreen
                           ),
                         )
                       )
