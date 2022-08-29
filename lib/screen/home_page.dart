@@ -21,10 +21,11 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10,top: 90),
+                    padding: const EdgeInsets.only(left: 10,top: 70),
                     child: GestureDetector(
                       onTap:()=>  Get.to(()=>const  SettingPageView()),
                       child: Container(
@@ -41,27 +42,49 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 90),
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(10, 13, 10, 13),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: meGreen),
-                        color: Colors.white
-                      ),
-                      child: Text(
-                        "Cari Pedagang Kesukaanmu...",
-                        style: TextStyle(
-                          color: Colors.grey.withOpacity(0.6),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500
+                  Expanded( // TextField mencari pedagang
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 70, left: 10),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(9),
+                          filled: true,
+                          fillColor: Colors.white,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1, color: buttonGreen),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1, color: buttonGreen),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1, color: buttonGreen),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1,)
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1,color: Colors.black)
+                          ),
+                          focusedErrorBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                          ),
+                          hintText: "Mencari Pedagang kesukaanmu...",
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFB3B1B1)
+                          ),
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10,top: 90),
+                    padding: const EdgeInsets.only(left: 10,top: 70),
                     child: Container(
                       padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
@@ -139,10 +162,10 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
-                      // Button for next
-
+                      
                       const SizedBox(height: 13,),
-                      Container(
+
+                      Container( // Button for next
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -179,6 +202,7 @@ class _HomeState extends State<Home> {
   }
 }
 
+// widget maps
 Widget buildMaps() {
   return GestureDetector(
     child: Column(

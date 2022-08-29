@@ -42,7 +42,7 @@ class SettingPageView extends StatelessWidget {
             ),
             title: Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child: Text(
+              child: Text( // title setting username
                 "Lala",
                 style: TextStyle(
                   fontSize: 16,
@@ -53,7 +53,7 @@ class SettingPageView extends StatelessWidget {
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                Text( // title setting Email
                   "Faizalfebriyanto886@gmail.com",
                   style: TextStyle(
                     color: Colors.grey,
@@ -99,7 +99,170 @@ class SettingPageView extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  
+                  SizedBox(height: 20,),
+                  TextField( // Textfield ubah Nama
+                    textAlign: TextAlign.end,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,)
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,color: Colors.black)
+                      ),
+                      focusedErrorBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                      ),
+                      hintText: "Lala",
+                      
+                      hintStyle: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFFB3B1B1)
+                      ),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 15),
+                        child: Text(
+                          "Ubah Nama",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: textFieldGreen,
+                            fontSize: 14
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  TextField( // Textfield ubah Email
+                    textAlign: TextAlign.end,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,)
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,color: Colors.black)
+                      ),
+                      focusedErrorBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                      ),
+                      hintText: "Faizal@gmail.com",
+                      hintStyle: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFFB3B1B1)
+                      ),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 15),
+                        child: Text(
+                          "Ubah Email",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: textFieldGreen,
+                            fontSize: 14
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  TextField( // Textfield ubah no telp
+                    textAlign: TextAlign.end,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      filled: true,
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,)
+                      ),
+                      errorBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,color: Colors.black)
+                      ),
+                      focusedErrorBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                      ),
+                      hintText: "08773727183",
+                      hintStyle: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFFB3B1B1)
+                      ),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 15),
+                        child: Text(
+                          "Ubah No Telp",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            color: textFieldGreen,
+                            fontSize: 14
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 15, right: 15))
+                    ),
+                    onPressed: null,
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ),
+                  SizedBox(height: 20,),
                 ],
               )
             ),

@@ -49,49 +49,90 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   
                   const SizedBox(height: 40,),
-                  Padding(
+                  Padding( // text Field for email
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: buttonGreen, 
-                            width: 2,
-                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
                         ),
                         hintText: "Isi email kamu disini...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.7),
+                        hintStyle: const TextStyle(
                           fontSize: 14,
+                          color: Color(0xFFB3B1B1)
                         ),
                         prefixIcon: Icon(
                           Icons.email,
                           color: buttonGreen,
-                        ),
+                        )
                       ),
                     ),
                   ),
 
                   const SizedBox(height: 20,),
-                  Padding(
+                  Padding( // text Field for password
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      obscureText: true,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: buttonGreen, 
-                            width: 2,
-                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
                         ),
                         hintText: "Isi password kamu disini...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.7),
+                        hintStyle: const TextStyle(
                           fontSize: 14,
+                          color: Color(0xFFB3B1B1)
                         ),
                         prefixIcon: Icon(
                           Icons.password_outlined,
                           color: buttonGreen,
-                        ),
+                        )
                       ),
                     ),
                   ),
@@ -116,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: buttonGreen,
+                        color: const Color(0XFFA0A4FF),
                         borderRadius: BorderRadius.circular(10)
                       ),
                       child: const Text(
