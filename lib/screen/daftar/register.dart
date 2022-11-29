@@ -1,6 +1,8 @@
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/daftar/controller/register_controller.dart';
 import 'package:bakoelku/screen/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class RegisterPageView extends StatelessWidget {
@@ -8,6 +10,7 @@ class RegisterPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(RegisterController());
     return Scaffold(
       backgroundColor: backdoor,
       body: Stack(
@@ -46,6 +49,7 @@ class RegisterPageView extends StatelessWidget {
                   Padding( // text Field for username
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      controller: controller.usernameController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -90,6 +94,7 @@ class RegisterPageView extends StatelessWidget {
                   Padding( // text Field for email
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      controller: controller.emailController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -134,6 +139,7 @@ class RegisterPageView extends StatelessWidget {
                   Padding( // text Field for password
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      controller: controller.passwordController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -178,7 +184,16 @@ class RegisterPageView extends StatelessWidget {
                   Padding( // text Field for no telp
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      controller: controller.noTelpController,
                       keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'[0-9]'),
+                        ),
+                        FilteringTextInputFormatter.deny(
+                          RegExp(r'^0+'), //users can't type 0 at 1st position
+                        ),
+                      ],
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
@@ -228,7 +243,9 @@ class RegisterPageView extends StatelessWidget {
 
                   const SizedBox(height: 20,),
                   GestureDetector( // Button Login
-                    onTap: () => Get.to(() => const Home()),
+                    onTap: () {
+                      controller.registrasiUser(context);
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(

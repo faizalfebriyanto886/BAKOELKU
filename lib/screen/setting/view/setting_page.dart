@@ -269,8 +269,9 @@ class SettingPageView extends StatelessWidget {
                   SizedBox(height: 20,),
                   GestureDetector(
                     onTap: () {
-                      FirebaseAuth.instance.signOut();
-                      Get.to(() => MainPageView());
+                      // FirebaseAuth.instance.signOut();
+                      // Get.to(() => MainPageView());
+                      controller.getUserData();
                     },
                     child: Container(
                       alignment: Alignment.center,
