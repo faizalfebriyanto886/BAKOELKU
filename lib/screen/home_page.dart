@@ -1,16 +1,11 @@
 import 'package:bakoelku/colors.dart';
-import 'package:bakoelku/screen/setting/setting_page.dart';
+import 'package:bakoelku/screen/setting/view/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({ Key? key }) : super(key: key);
 
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,12 +27,12 @@ class _HomeState extends State<Home> {
                         padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: meGreen),
+                          border: Border.all(color: primary),
                           color: Colors.white
                         ),
                         child: Icon(
                           Icons.settings,
-                          color: meGreen,
+                          color: primary,
                         ),
                       ),
                     ),
@@ -52,15 +47,15 @@ class _HomeState extends State<Home> {
                           fillColor: Colors.white,
                           focusedBorder: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1, color: buttonGreen),
+                            borderSide: BorderSide(width: 1, color: primary),
                           ),
                           disabledBorder: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1, color: buttonGreen),
+                            borderSide: BorderSide(width: 1, color: primary),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1, color: buttonGreen),
+                            borderSide: BorderSide(width: 1, color: primary),
                           ),
                           border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -70,9 +65,9 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.all(Radius.circular(4)),
                             borderSide: BorderSide(width: 1,color: Colors.black)
                           ),
-                          focusedErrorBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(width: 1,color: primary)
                           ),
                           hintText: "Mencari Pedagang kesukaanmu...",
                           hintStyle: const TextStyle(
@@ -89,12 +84,12 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: meGreen),
+                        border: Border.all(color: primary),
                         color: Colors.white
                       ),
                       child: Icon(
                         Icons.search,
-                        color: meGreen,
+                        color: primary,
                       ),
                     ),
                   ),
@@ -141,7 +136,7 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CircleAvatar(
-                              backgroundColor: meGreen,
+                              backgroundColor: primary,
                               radius: 16,
                               child: const Icon(
                                 Icons.phone,
@@ -151,7 +146,7 @@ class _HomeState extends State<Home> {
                             ),
                             const SizedBox(width: 10),
                             CircleAvatar(
-                              backgroundColor: meGreen,
+                              backgroundColor: primary,
                               radius: 16,
                               child: const Icon(
                                 Icons.messenger,
@@ -169,7 +164,7 @@ class _HomeState extends State<Home> {
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: meGreen,
+                          color: primary,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

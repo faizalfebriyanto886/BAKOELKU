@@ -9,7 +9,7 @@ class RegisterPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: meGreen,
+      backgroundColor: backdoor,
       body: Stack(
         children: [
            Container(
@@ -36,101 +36,192 @@ class RegisterPageView extends StatelessWidget {
                     "Registrasi",
                     textAlign: TextAlign.center,
                     style: TextStyle(                    
-                      color: meGreen,
+                      color: primary,
                       fontSize: 26,
                       fontWeight: FontWeight.w600
                     ),
                   ),
                   
                   const SizedBox(height: 40,),
-                  Padding(
+                  Padding( // text Field for username
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: meGreen, 
-                            width: 2,
-                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
                         ),
                         hintText: "Isi username kamu disini...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.7),
+                        hintStyle: const TextStyle(
                           fontSize: 14,
+                          color: Color(0xFFB3B1B1)
                         ),
                         prefixIcon: Icon(
                           Icons.person,
-                          color: meGreen,
-                        ),
+                          color: primary,
+                        )
                       ),
                     ),
                   ),
 
                   const SizedBox(height: 20,),
-                  Padding(
+                  Padding( // text Field for email
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: meGreen, 
-                            width: 2,
-                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
                         ),
                         hintText: "Isi email kamu disini...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.7),
+                        hintStyle: const TextStyle(
                           fontSize: 14,
+                          color: Color(0xFFB3B1B1)
                         ),
                         prefixIcon: Icon(
                           Icons.email,
-                          color: meGreen,
-                        ),
+                          color: primary,
+                        )
                       ),
                     ),
                   ),
 
                   const SizedBox(height: 20,),
-                  Padding(
+                  Padding( // text Field for password
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: meGreen, 
-                            width: 2,
-                          ),
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
                         ),
                         hintText: "Isi password kamu disini...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.7),
+                        hintStyle: const TextStyle(
                           fontSize: 14,
+                          color: Color(0xFFB3B1B1)
                         ),
                         prefixIcon: Icon(
-                          Icons.password_outlined,
-                          color: meGreen,
-                        ),
+                          Icons.password_rounded,
+                          color: primary,
+                        )
                       ),
                     ),
                   ),
 
                   const SizedBox(height: 20,),
-                  Padding(
+                  Padding( // text Field for no telp
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
-                      maxLength: 5,
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: meGreen, 
-                            width: 2,
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
+                        ),
+                        hintText: "8123456789",
+                        hintStyle: const TextStyle(
+                          fontSize: 17,
+                          color: Color(0xFFB3B1B1)
+                        ),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 13),
+                          child: Text(
+                            "+62",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: primary
+                            ),
                           ),
-                        ),
-                        hintText: "Isi alamat kamu disini...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey.withOpacity(0.7),
-                          fontSize: 14,
-                        ),
+                        )
                       ),
                     ),
                   ),
@@ -141,7 +232,7 @@ class RegisterPageView extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: meGreen,
+                        color: primary,
                         borderRadius: BorderRadius.circular(10)
                       ),
                       child: const Text(
@@ -160,38 +251,6 @@ class RegisterPageView extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget fieldWidget(
-    {
-    required String hintText,
-    required TextEditingController? controller,
-    required IconData icon,
-    }
-  ){
-    
-    return Padding(
-      padding: const EdgeInsets.only(left: 40, right: 40),
-      child: TextField(
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: meGreen, 
-              width: 2,
-            ),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: Colors.grey.withOpacity(0.7),
-            fontSize: 14,
-          ),
-          prefixIcon: Icon(
-            icon,
-            color: meGreen,
-          ),
-        ),
       ),
     );
   }

@@ -1,21 +1,17 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/screen/daftar/register.dart';
-import 'package:bakoelku/screen/home_page.dart';
+import 'package:bakoelku/screen/login/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({ Key? key }) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return Scaffold(
-      backgroundColor: meGreen,
+      backgroundColor: backdoor,
       body: Stack(
         children: [
           Container(
@@ -42,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
                     "Login",
                     textAlign: TextAlign.center,
                     style: TextStyle(                    
-                      color: meGreen,
+                      color: primary,
                       fontSize: 26,
                       fontWeight: FontWeight.w600
                     ),
@@ -52,20 +48,22 @@ class _LoginPageState extends State<LoginPage> {
                   Padding( // text Field for email
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: controller.emailController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                          borderSide: BorderSide(width: 1, color: primary),
                         ),
                         disabledBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                          borderSide: BorderSide(width: 1, color: primary),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                          borderSide: BorderSide(width: 1, color: primary),
                         ),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -75,9 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1,color: Colors.black)
                         ),
-                        focusedErrorBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
                         ),
                         hintText: "Isi email kamu disini...",
                         hintStyle: const TextStyle(
@@ -86,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         prefixIcon: Icon(
                           Icons.email,
-                          color: buttonGreen,
+                          color: primary,
                         )
                       ),
                     ),
@@ -96,21 +94,22 @@ class _LoginPageState extends State<LoginPage> {
                   Padding( // text Field for password
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: TextField(
+                      controller: controller.passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                          borderSide: BorderSide(width: 1, color: primary),
                         ),
                         disabledBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                          borderSide: BorderSide(width: 1, color: primary),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: buttonGreen),
+                          borderSide: BorderSide(width: 1, color: primary),
                         ),
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -120,9 +119,9 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.all(Radius.circular(4)),
                           borderSide: BorderSide(width: 1,color: Colors.black)
                         ),
-                        focusedErrorBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
                         ),
                         hintText: "Isi password kamu disini...",
                         hintStyle: const TextStyle(
@@ -131,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         prefixIcon: Icon(
                           Icons.password_outlined,
-                          color: buttonGreen,
+                          color: primary,
                         )
                       ),
                     ),
@@ -153,11 +152,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   GestureDetector( // Button Login
-                    onTap: () => Get.to(() => const Home()),
+                    onTap: () {
+                      controller.signIn(context);
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: const Color(0XFFA0A4FF),
+                        color: primary,
                         borderRadius: BorderRadius.circular(10)
                       ),
                       child: const Text(
@@ -187,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Daftar",
                           style: TextStyle(
-                            color: buttonGreen
+                            color: primary
                           ),
                         )
                       )

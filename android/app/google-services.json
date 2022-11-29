@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "990125143741",
+    "project_id": "bakoelku-e4f04",
+    "storage_bucket": "bakoelku-e4f04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990125143741:android:361c46dcff2cd2d151e9d4",
+        "android_client_info": {
+          "package_name": "com.example.bakoelku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990125143741-q725362f02olfos9qagqc51euov15s4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBipMwvGtw2X3k-TpgMxQizYWDYnKBixLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990125143741-q725362f02olfos9qagqc51euov15s4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

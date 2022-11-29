@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/main_page/view/main_page_view.dart';
+import 'package:bakoelku/screen/setting/controller/setting_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +12,7 @@ class SettingPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SettingController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -34,60 +38,74 @@ class SettingPageView extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(10),
         children: [
-          ListTile(
-            contentPadding: EdgeInsets.all(5),
-            leading: CircleAvatar(
-              radius: 35.0,
-              backgroundColor: Colors.amber,
-            ),
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Text( // title setting username
-                "Lala",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: primary
+                  )
                 ),
-              ),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text( // title setting Email
-                  "Faizalfebriyanto886@gmail.com",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500
-                  ),
-                ),
-                SizedBox(height: 8),
-                Container( // chip kota
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder (
-                        borderRadius: BorderRadius.circular(30.0),
-                        side: BorderSide(
-                            width: 1,
-                            color: textFieldGreen
-                        )
-                    )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    child: Text(
-                      "Surabaya",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: textFieldGreen
-                      )
+                child: Container(
+                  height: 50.0,
+                  width: 50.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/foto-profile.png'
+                      ),
+                      fit: BoxFit.cover,
                     ),
+                    shape: BoxShape.circle,
                   ),
                 )
-              ],
-            ),
+              ),
+              SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Lala", 
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    controller.dataUser!.email.toString(), 
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: primary,
+                        width: 2
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      "Surabaya", 
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
-          
           SizedBox(height: 20,),
           // Card setting data
           Container(
@@ -180,7 +198,7 @@ class SettingPageView extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(4)),
                         borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
                       ),
-                      hintText: "Faizal@gmail.com",
+                      hintText: controller.dataUser!.email,
                       hintStyle: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFFB3B1B1)
@@ -201,6 +219,7 @@ class SettingPageView extends StatelessWidget {
                   SizedBox(height: 20,),
                   TextField( // Textfield ubah no telp
                     textAlign: TextAlign.end,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(10),
                       filled: true,
@@ -248,19 +267,28 @@ class SettingPageView extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20,),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 15, right: 15))
-                    ),
-                    onPressed: null,
-                    child: Text(
-                      "Log Out",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
+                  GestureDetector(
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                      Get.to(() => MainPageView());
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: Get.width * 0.7,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: danger
                       ),
-                    )
+                      child: Text(
+                        "Log Out", 
+                        style: TextStyle(
+                          fontSize: 16, 
+                          color: Colors.white, 
+                          fontWeight: FontWeight.w600
+                        )
+                      ),
+                    ),
                   ),
                   SizedBox(height: 20,),
                 ],
