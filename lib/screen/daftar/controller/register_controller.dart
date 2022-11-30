@@ -9,6 +9,8 @@ class RegisterController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final noTelpController = TextEditingController();
+  final alamatController = TextEditingController();
+  
   CollectionReference userData = FirebaseFirestore.instance.collection("auth");
 
   registrasiUser(BuildContext context) {

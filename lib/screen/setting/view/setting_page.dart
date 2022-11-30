@@ -226,27 +226,27 @@ class SettingPageView extends StatelessWidget {
                       fillColor: Colors.white,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                        borderSide: BorderSide(width: 2, color: buttonGreen),
                       ),
                       disabledBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                        borderSide: BorderSide(width: 2, color: buttonGreen),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(width: 1, color: buttonGreen),
+                        borderSide: BorderSide(width: 2, color: buttonGreen),
                       ),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1,)
+                        borderSide: BorderSide(width: 2,)
                       ),
                       errorBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1,color: Colors.black)
+                        borderSide: BorderSide(width: 2,color: Colors.black)
                       ),
                       focusedErrorBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1,color: Colors.yellowAccent)
+                        borderSide: BorderSide(width: 2,color: Colors.yellowAccent)
                       ),
                       hintText: "08773727183",
                       hintStyle: const TextStyle(
@@ -269,9 +269,8 @@ class SettingPageView extends StatelessWidget {
                   SizedBox(height: 20,),
                   GestureDetector(
                     onTap: () {
-                      // FirebaseAuth.instance.signOut();
-                      // Get.to(() => MainPageView());
-                      controller.getUserData();
+                      FirebaseAuth.instance.signOut();
+                      Get.to(() => MainPageView());
                     },
                     child: Container(
                       alignment: Alignment.center,

@@ -101,7 +101,7 @@ class Home extends StatelessWidget {
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                   padding: const EdgeInsets.all(15),
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.32,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
