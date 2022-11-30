@@ -1,4 +1,5 @@
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/setting/view/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -114,7 +115,7 @@ class Home extends StatelessWidget {
                         height: 75,
                       ),
 
-                       ListTile(
+                      ListTile(
                         title: const Text(
                           "Mie Ayam Solo",
                           style: TextStyle(
@@ -145,13 +146,16 @@ class Home extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            CircleAvatar(
-                              backgroundColor: primary,
-                              radius: 16,
-                              child: const Icon(
-                                Icons.messenger,
-                                color: Colors.white,
-                                size: 18,
+                            GestureDetector(
+                              onTap: () => Get.to(() => const ChatPageView()),
+                              child: CircleAvatar(
+                                backgroundColor: primary,
+                                radius: 16,
+                                child: const Icon(
+                                  Icons.messenger,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                               ),
                             )
                           ],
