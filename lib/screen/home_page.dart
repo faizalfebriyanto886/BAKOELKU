@@ -1,6 +1,7 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pedagang.dart';
+import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
