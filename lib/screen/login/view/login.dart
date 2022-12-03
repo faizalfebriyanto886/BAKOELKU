@@ -1,5 +1,5 @@
 import 'package:bakoelku/colors.dart';
-import 'package:bakoelku/screen/daftar/register.dart';
+import 'package:bakoelku/screen/daftar/view/register.dart';
 import 'package:bakoelku/screen/login/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

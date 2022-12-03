@@ -1,6 +1,5 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
-import 'package:bakoelku/screen/setting/view/setting_page_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 10,top: 70),
                     child: GestureDetector(
-                      onTap:()=>  Get.to(()=> const SettingPagePedagang()),
+                      onTap:()=>  Get.to(()=> const SettingPageView()),
                       child: Container(
                         padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
