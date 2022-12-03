@@ -41,69 +41,84 @@ class SettingPageView extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(7),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: primary
-                  )
+                  border: Border.all(color: primary),
+                  color: Colors.white
                 ),
                 child: Container(
-                  height: 50.0,
-                  width: 50.0,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/foto-profile.png'
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                  height: 55,
+                  width: 55,
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/foto-profile.png"),
+                      fit: BoxFit.cover
+                    )
                   ),
-                )
+                ),
               ),
               SizedBox(width: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Lala", 
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    controller.dataUser!.email.toString(), 
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey
-                    ),
-                  ),
-                  SizedBox(height: 5),
+                  const Text("Lala", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
+                  const SizedBox(height: 5),
+                  Text(controller.dataUser!.email.toString(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                  const SizedBox(height: 5),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: primary,
-                        width: 2
-                      ),
                       borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      border: Border.all(color: primary)
                     ),
-                    child: Text(
-                      "Surabaya", 
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey
-                      ),
-                    ),
-                  ),
+                    child: Text("Surabaya", style: TextStyle(color: primary, fontSize: 12, fontWeight: FontWeight.w500),),
+                  )
                 ],
               )
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       "Lala", 
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         fontWeight: FontWeight.w500,
+              //         color: Colors.black
+              //       ),
+              //     ),
+              //     SizedBox(height: 5),
+              //     Text(
+              //       controller.dataUser!.email.toString(), 
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         fontWeight: FontWeight.w500,
+              //         color: Colors.grey
+              //       ),
+              //     ),
+              //     SizedBox(height: 5),
+              //     Container(
+              //       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              //       decoration: BoxDecoration(
+              //         border: Border.all(
+              //           color: primary,
+              //           width: 2
+              //         ),
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //       child: Text(
+              //         "Surabaya", 
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.w500,
+              //           color: Colors.grey
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // )
             ],
           ),
           SizedBox(height: 20,),

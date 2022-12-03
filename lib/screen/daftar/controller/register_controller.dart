@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:bakoelku/reusable_widget/alert_widget.dart';
-import 'package:bakoelku/screen/main_page/view/main_page_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

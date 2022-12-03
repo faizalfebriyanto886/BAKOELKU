@@ -45,6 +45,7 @@ class LoginController extends GetxController {
           context: context
         );
       }
+      // ignore: avoid_print
       print("error :  ${err.code}");
     }
     
