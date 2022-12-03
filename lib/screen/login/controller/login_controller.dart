@@ -1,4 +1,4 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:bakoelku/reusable_widget/alert_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,53 +15,35 @@ class LoginController extends GetxController {
       );
     } on FirebaseAuthException catch (err) {
       if (err.code == 'invalid-email') {
-        final snackBar = SnackBar(
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.transparent,
-          content: AwesomeSnackbarContent(
-            title: "Ooops!", 
-            message: "Email dan password anda tidak cocok", 
-            contentType: ContentType.warning
-          )
+        CustomAlertDialogWarning(
+          title: "Ooops", 
+          subTitle: "Email dan password anda tidak cocok", 
+          context: context
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else if (err.code == 'wrong-password') {
-        final snackBar = SnackBar(
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.transparent,
-          content: AwesomeSnackbarContent(
-            title: "Ooops!", 
-            message: "Password anda salah...", 
-            contentType: ContentType.warning
-          )
+        CustomAlertDialogWarning(
+          title: "Ooops", 
+          subTitle: "Password anda salah...", 
+          context: context
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else if (err.code == 'user-not-found' && err.code == "unknown") {
-        final snackBar = SnackBar(
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.transparent,
-          content: AwesomeSnackbarContent(
-            title: "Ooops!", 
-            message: "Akun tidak ditemukan", 
-            contentType: ContentType.warning
-          )
+        CustomAlertDialogWarning(
+          title: "Ooops", 
+          subTitle: "Akun tidak ditemukan", 
+          context: context
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else if (err.code == "network-request-failed") {
-        final snackBar = SnackBar(
-          elevation: 0,
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.transparent,
-          content: AwesomeSnackbarContent(
-            title: "Ooops!", 
-            message: "Terjadi kesalahan pada koneksi anda", 
-            contentType: ContentType.warning
-          )
+        CustomAlertDialogWarning(
+          title: "Ooops", 
+          subTitle: "Terjadi kesalahan pada koneksi anda", 
+          context: context
         );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        CustomAlertDialogWarning(
+          title: "Ooops", 
+          subTitle: "Akun tidak ditemukan", 
+          context: context
+        );
       }
       print("error :  ${err.code}");
     }

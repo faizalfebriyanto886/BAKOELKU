@@ -75,6 +75,7 @@ class CustomTextFieldWithState extends StatelessWidget {
   final Color color;
   final String hintText;
   final Widget? prefix;
+  final bool obsure;
   final Function(String)? onchange;
   final TextInputType? textInputType;
   final List<TextInputFormatter>? textInputFormatter;
@@ -84,6 +85,7 @@ class CustomTextFieldWithState extends StatelessWidget {
     required this.color,
     required this.hintText,
     this.prefix,
+    this.obsure = false,
     this.textInputType,
     this.textInputFormatter,
     this.onchange,
@@ -96,6 +98,7 @@ class CustomTextFieldWithState extends StatelessWidget {
       controller: controller,
       inputFormatters: textInputFormatter,
       keyboardType: textInputType,
+      obscureText: obsure,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,

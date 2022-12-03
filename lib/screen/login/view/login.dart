@@ -1,4 +1,5 @@
 import 'package:bakoelku/colors.dart';
+import 'package:bakoelku/reusable_widget/custom_text_field.dart';
 import 'package:bakoelku/screen/daftar/view/register.dart';
 import 'package:bakoelku/screen/login/controller/login_controller.dart';
 import 'package:flutter/material.dart';
@@ -47,93 +48,30 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 40,),
                   Padding( // text Field for email
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: controller.emailController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: primary),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: primary),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: primary),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,)
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,color: Colors.black)
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,color: primary)
-                        ),
-                        hintText: "Isi email kamu disini...",
-                        hintStyle: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFFB3B1B1)
-                        ),
-                        prefixIcon: Icon(
-                          Icons.email,
-                          color: primary,
-                        )
+                    child: CustomTextFieldWithState(
+                      controller: controller.emailController, 
+                      color: primary, 
+                      hintText: "Isi email kamu disini...",
+                      prefix: Icon(
+                        Icons.email,
+                        color: primary,
                       ),
-                    ),
+                    )
                   ),
 
                   const SizedBox(height: 20,),
                   Padding( // text Field for password
                     padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: TextField(
-                      controller: controller.passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: primary),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: primary),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1, color: primary),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,)
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,color: Colors.black)
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: const BorderRadius.all(Radius.circular(4)),
-                          borderSide: BorderSide(width: 1,color: primary)
-                        ),
-                        hintText: "Isi password kamu disini...",
-                        hintStyle: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFFB3B1B1)
-                        ),
-                        prefixIcon: Icon(
-                          Icons.password_outlined,
-                          color: primary,
-                        )
+                    child: CustomTextFieldWithState(
+                      controller: controller.passwordController, 
+                      color: primary, 
+                      hintText: "Isi password kamu disini...",
+                      obsure: true,
+                      prefix: Icon(
+                        Icons.password_outlined,
+                        color: primary,
                       ),
-                    ),
+                    )
                   ),
 
                   const Align(
