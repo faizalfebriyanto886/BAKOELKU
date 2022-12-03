@@ -1,6 +1,6 @@
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:bakoelku/screen/home_page.dart';
+import 'package:bakoelku/screen/home_page/view/home_page.dart';
 import 'package:bakoelku/screen/login/view/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class MainPageView extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const Home();
+            return const HomePage();
           } else if (snapshot.hasError) {
             return SnackBar(
               elevation: 0,

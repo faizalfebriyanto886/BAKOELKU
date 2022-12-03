@@ -1,14 +1,17 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
+import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Home extends StatelessWidget {
-  const Home({ Key? key }) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HomeController());
     return Scaffold(
       body: Stack(
         children: [
@@ -16,13 +19,13 @@ class Home extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10,top: 70),
-                    child: GestureDetector(
+              Padding(
+                padding: const EdgeInsets.only(top: 70),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
                       onTap:()=>  Get.to(()=> const SettingPageView()),
                       child: Container(
                         padding: const EdgeInsets.all(9),
@@ -37,25 +40,23 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  Expanded( // TextField mencari pedagang
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 70, left: 10),
+                    SizedBox(
+                      width: Get.width * 0.65,
                       child: TextField(
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(9),
                           filled: true,
                           fillColor: Colors.white,
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                             borderSide: BorderSide(width: 1, color: primary),
                           ),
                           disabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                             borderSide: BorderSide(width: 1, color: primary),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(4)),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
                             borderSide: BorderSide(width: 1, color: primary),
                           ),
                           border: const OutlineInputBorder(
@@ -78,10 +79,7 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10,top: 70),
-                    child: Container(
+                    Container(
                       padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -93,52 +91,78 @@ class Home extends StatelessWidget {
                         color: primary,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
               // for Detail menu
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
-                  padding: const EdgeInsets.all(15),
-                  height: MediaQuery.of(context).size.height * 0.32,
-                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
                   child: Column(
                     children: [
-                      Image.asset(
-                        "assets/images/mart-dummy.png",
-                        height: 75,
+                      CarouselSlider(
+                        items: controller.imageCarousel.map((value) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            border: Border.all(color: primary)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(value,),
+                          )
+                        )).toList(),
+                        options: CarouselOptions(
+                          height: 90,
+                          aspectRatio: 16/9,
+                          viewportFraction: 0.4,
+                          initialPage: 0,
+                          enlargeCenterPage: true,
+                          autoPlay: false, // jika sudah maka autoplay bisa di aktifkan
+                          autoPlayAnimationDuration: const Duration(seconds: 5),
+                          autoPlayCurve: Curves.bounceIn,
+                          scrollDirection: Axis.horizontal,
+                        ),
                       ),
-
-                      ListTile(
-                        title: const Text(
-                          "Mie Ayam Solo",
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                          ),
-                        ),
-                        subtitle: const Text(
-                          "Kota Surabaya",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                        child: Row(
                           children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Mie Ayam Solo",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    "Kota Surabaya",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.grey
+                                    ),
+                                  ),
+                                  
+                                ],
+                              ),
+                            ),
+
                             CircleAvatar(
                               backgroundColor: primary,
-                              radius: 16,
+                              radius: 18,
                               child: const Icon(
                                 Icons.phone,
                                 color: Colors.white,
@@ -150,7 +174,7 @@ class Home extends StatelessWidget {
                               onTap: () => Get.to(() => const ChatPageView()),
                               child: CircleAvatar(
                                 backgroundColor: primary,
-                                radius: 16,
+                                radius: 18,
                                 child: const Icon(
                                   Icons.messenger,
                                   color: Colors.white,
@@ -161,9 +185,7 @@ class Home extends StatelessWidget {
                           ],
                         ),
                       ),
-                      
-                      const SizedBox(height: 13,),
-
+                      const SizedBox(height: 10),
                       Container( // Button for next
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -203,18 +225,14 @@ class Home extends StatelessWidget {
 
 // widget maps
 Widget buildMaps() {
-  return GestureDetector(
-    child: Column(
-      children: <Widget>[
-        Expanded(
-          child: Image.asset(
-            'assets/images/maps_screenshot.png',
-            width: double.infinity,
-            height: double.infinity,
-            alignment: Alignment.center,
-            fit: BoxFit.cover,
-          ))
-      ],
+  return Container(
+    height: double.infinity,
+    width: double.infinity,
+    decoration: const BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('assets/images/maps_screenshot.png'),
+        fit: BoxFit.cover
+      )
     ),
   );
 }
