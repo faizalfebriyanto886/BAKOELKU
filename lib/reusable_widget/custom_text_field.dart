@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import '../colors.dart';
 
 class CustomTextFieldSettingWidget extends StatelessWidget {
+  final TextEditingController? controller;
   final double widthSized;
   final Color colorsBorder;
   final String hintText;
   final String prefixText;
   const CustomTextFieldSettingWidget({
+    this.controller,
     required this.colorsBorder,
     required this.widthSized,
     required this.hintText,
@@ -19,7 +21,8 @@ class CustomTextFieldSettingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: widthSized,
-      child: TextField( // Textfield ubah Nama
+      child: TextField(
+        controller: controller,
         textAlign: TextAlign.end,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10),

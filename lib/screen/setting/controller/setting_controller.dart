@@ -4,21 +4,10 @@ import 'package:get/get.dart';
 
 class SettingController extends GetxController {
   final dataUser = FirebaseAuth.instance.currentUser;
-  var getUser = FirebaseFirestore.instance.collection('auth').doc('0l6Gsa9X3dqcWGX24t5M').get();
-
-  // @override
-  // void onInit() {
-  //   // getUserData();
-  //   super.onInit();
-  // }
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   
-  // getUserData() async {
-  //   var collection = FirebaseFirestore.instance.collection('auth');
-  //   var docSnapshot = await collection.doc('0l6Gsa9X3dqcWGX24t5M').get();
-  //   if (docSnapshot.exists) {
-  //     Map<String, dynamic>? data = docSnapshot.data();
-  //     var value = data?['name'];
-  //     print(value);
-  //   }
-  // }
+  Future<DocumentSnapshot<Object?>> getSettings() async {
+    DocumentReference docRef = firestore.collection("auth").doc('0l6Gsa9X3dqcWGX24t5M');
+    return docRef.get();
+  }
 }
