@@ -37,13 +37,13 @@ class RegisterController extends GetxController {
         email: emailController.text, 
         password: passwordController.text,
       ).then((value) {
-        userData.add({
+        userData.doc(value.user?.uid).set({
           'email': emailController.text,
           'name': usernameController.text,
           'no_telp': double.parse(noTelpController.text),
           'uid': value.user!.uid,
           'alamat': alamatController.text,
-          'role': roleController.value
+          'role': roleController.value,
         }).then((value) {
           clearRegisterData();
           CustomAlertDialogSuccess(
@@ -51,10 +51,10 @@ class RegisterController extends GetxController {
             subTitle: "Email dan password berhasil terdaftar", 
             context: context
           );
-          Timer(const Duration(seconds: 4), () => Get.back());
+          Timer(const Duration(seconds: 3), () => Get.back());
         }).catchError((error) {
           CustomAlertDialogWarning(
-            title: "Maaf", 
+            title: "Maaf",
             subTitle: "Email dan password tidak berhasil terdaftar, mohon cek kembali", 
             context: context
           );
