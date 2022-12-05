@@ -1,6 +1,8 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
+import 'package:bakoelku/screen/home_page/controller/home_controller_menuju_customer.dart';
+import 'package:bakoelku/screen/home_page/view/home_page_menuju_customer.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -187,30 +189,33 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Container( // Button for next
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: primary,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Text(
-                              "Menuju Lokasi",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold
+                      GestureDetector( // button Next
+                        onTap: () => Get.to(() => HomePageMenujuCustomer(docId: docId)),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: primary,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text(
+                                "Menuju Lokasi",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold
+                                ),
                               ),
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_right_outlined,
-                              color: Colors.white,
-                              size: 28,
-                            )
-                          ],
-                        )
+                              Icon(
+                                Icons.keyboard_arrow_right_outlined,
+                                color: Colors.white,
+                                size: 28,
+                              )
+                            ],
+                          )
+                        ),
                       )
                     ],
                   ),
@@ -222,18 +227,17 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
-
-// widget maps
-Widget buildMaps() {
-  return Container(
-    height: double.infinity,
-    width: double.infinity,
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/images/maps_screenshot.png'),
-        fit: BoxFit.cover
-      )
-    ),
-  );
+  // widget maps
+  Widget buildMaps() {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/maps_screenshot.png'),
+          fit: BoxFit.cover
+        )
+      ),
+    );
+  }
 }
