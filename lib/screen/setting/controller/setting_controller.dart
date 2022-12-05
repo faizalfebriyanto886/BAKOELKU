@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 class SettingController extends GetxController {
   final dataUser = FirebaseAuth.instance.currentUser;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  var uid = Get.arguments;
   
   Future<DocumentSnapshot<Object?>> getSettings() async {
-    DocumentReference docRef = firestore.collection("auth").doc('0l6Gsa9X3dqcWGX24t5M');
+    DocumentReference docRef = firestore.collection("auth").doc(uid);
     return docRef.get();
   }
 }

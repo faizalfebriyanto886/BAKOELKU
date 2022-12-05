@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({ Key? key }) : super(key: key);
+  final String docId;
+  const HomePage({ required this.docId, Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                      onTap:()=>  Get.to(()=> const SettingPageView()),
+                      onTap:()=>  Get.to(()=> const SettingPageView(), arguments: docId),
                       child: Container(
                         padding: const EdgeInsets.all(9),
                         decoration: BoxDecoration(
