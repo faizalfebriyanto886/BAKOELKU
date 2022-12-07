@@ -8,7 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../reusable_widget/custom_text_field.dart';
 
 class SettingPageView extends StatelessWidget {
@@ -44,111 +43,128 @@ class SettingPageView extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             var data = snapshot.data!.data() as Map<String, dynamic>;
-            return ListView(
-              padding: EdgeInsets.all(10),
-              children: [
-                Row(
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: primary),
-                        color: Colors.white
-                      ),
-                      child: Container(
-                        height: 55,
-                        width: 55,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage("assets/images/foto-profile.png"),
-                            fit: BoxFit.cover
-                          )
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Text(data['name'], style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
-                        const SizedBox(height: 5),
-                        Text(controller.dataUser!.email.toString(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
-                        const SizedBox(height: 5),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: primary)
+                            shape: BoxShape.circle,
+                            border: Border.all(color: primary),
+                            color: Colors.white
                           ),
-                          child: Text(data['alamat'], style: TextStyle(color: primary, fontSize: 12, fontWeight: FontWeight.w500),),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(height: 20,),
-                // Card setting data
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: primary.withOpacity(0.5)
-                  ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        CustomTextFieldSettingWidget(
-                          colorsBorder: primary,
-                          widthSized: Get.width, 
-                          hintText: data['name'], 
-                          prefixText: "Ubah Nama"
-                        ),
-                        const SizedBox(height: 15),
-                        CustomTextFieldSettingWidget(
-                          colorsBorder: primary, 
-                          widthSized: Get.width, 
-                          hintText: data['email'], 
-                          prefixText: "Ubah Email"
-                        ),
-                        const SizedBox(height: 15),
-                        CustomTextFieldSettingWidget(
-                          colorsBorder: primary,
-                          widthSized: Get.width, 
-                          hintText: data['no_telp'].toString(), 
-                          prefixText: "Ubah No Telp"
-                        ),
-                        SizedBox(height: 20,),
-                        GestureDetector(
-                          onTap: () {
-                            FirebaseAuth.instance.signOut();
-                            Get.to(() => MainPageView());
-                          },
                           child: Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: Get.width * 0.7,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: danger
-                            ),
-                            child: Text(
-                              "Log Out", 
-                              style: TextStyle(
-                                fontSize: 16, 
-                                color: Colors.white, 
-                                fontWeight: FontWeight.w600
+                            height: 55,
+                            width: 55,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/foto-profile.png"),
+                                fit: BoxFit.cover
                               )
                             ),
                           ),
                         ),
+                        SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(data['name'], style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
+                            const SizedBox(height: 5),
+                            Text(data['email'], style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.grey),),
+                            const SizedBox(height: 5),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                border: Border.all(color: primary)
+                              ),
+                              child: Text(data['alamat'], style: TextStyle(color: primary, fontSize: 12, fontWeight: FontWeight.w500),),
+                            )
+                          ],
+                        )
                       ],
-                    )
-                  ),
-                )
-              ],
+                    ),
+                    SizedBox(height: 20,),
+                    // Card setting data
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: primary.withOpacity(0.15)
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            CustomTextFieldSettingWidget(
+                              colorsBorder: primary,
+                              widthSized: Get.width, 
+                              hintText: data['name'], 
+                              prefixText: "Ubah Nama"
+                            ),
+                            const SizedBox(height: 15),
+                            CustomTextFieldSettingWidget(
+                              colorsBorder: primary, 
+                              widthSized: Get.width, 
+                              hintText: data['email'], 
+                              prefixText: "Ubah Email"
+                            ),
+                            const SizedBox(height: 15),
+                            CustomTextFieldSettingWidget(
+                              colorsBorder: primary,
+                              widthSized: Get.width, 
+                              hintText: data['no_telp'].toString(), 
+                              prefixText: "Ubah No Telp"
+                            ),
+                            SizedBox(height: 20),
+                            GestureDetector(
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: primary
+                                ),
+                                child: const Text("Simpan", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),),
+                              ),
+                            )
+                          ],
+                        )
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        FirebaseAuth.instance.signOut();
+                        Get.to(() => MainPageView());
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 40,
+                        width: Get.width * 0.7,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: danger
+                        ),
+                        child: Text(
+                          "Log Out", 
+                          style: TextStyle(
+                            fontSize: 16, 
+                            color: Colors.white, 
+                            fontWeight: FontWeight.w600
+                          )
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             );
           } 
           return CustomLoadingIndicator();

@@ -8,12 +8,14 @@ class CustomTextFieldSettingWidget extends StatelessWidget {
   final Color colorsBorder;
   final String hintText;
   final String prefixText;
+  final Function(String)? onChanged;
   const CustomTextFieldSettingWidget({
     this.controller,
     required this.colorsBorder,
     required this.widthSized,
     required this.hintText,
     required this.prefixText,
+    this.onChanged,
     Key? key
   }) : super(key: key);
 
@@ -68,6 +70,7 @@ class CustomTextFieldSettingWidget extends StatelessWidget {
             ),
           ),
         ),
+        onChanged: onChanged,
       ),
     );
   }

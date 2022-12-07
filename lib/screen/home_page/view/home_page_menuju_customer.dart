@@ -23,81 +23,25 @@ class HomePageMenujuCustomer extends StatelessWidget {
         children: [
           buildMaps(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 70),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap:()=>  Get.to(()=> const SettingPageView(), arguments: docId),
-                      child: Container(
-                        padding: const EdgeInsets.all(9),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: primary),
-                          color: Colors.white
-                        ),
-                        child: Icon(
-                          Icons.settings,
-                          color: primary,
-                        ),
-                      ),
+                padding: const EdgeInsets.only(top: 70, left: 20),
+                child: GestureDetector(
+                  onTap:()=> Get.to(()=> const SettingPageView(), arguments: docId),
+                  child: Container(
+                    padding: const EdgeInsets.all(9),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: primary),
+                      color: Colors.white
                     ),
-                    SizedBox(
-                      width: Get.width * 0.65,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(9),
-                          filled: true,
-                          fillColor: Colors.white,
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(width: 1, color: primary),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(width: 1, color: primary),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(width: 1, color: primary),
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1,)
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1,color: Colors.black)
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(Radius.circular(4)),
-                            borderSide: BorderSide(width: 1,color: primary)
-                          ),
-                          hintText: "Mencari Pedagang kesukaanmu...",
-                          hintStyle: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFFB3B1B1)
-                          ),
-                        ),
-                      ),
+                    child: Icon(
+                      Icons.settings,
+                      color: primary,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(9),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: primary),
-                        color: Colors.white
-                      ),
-                      child: Icon(
-                        Icons.search,
-                        color: primary,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
 
