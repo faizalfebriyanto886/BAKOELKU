@@ -19,15 +19,34 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          buildMaps(),
-          FutureBuilder<DocumentSnapshot<Object?>>(
-            future: controller.getDataUser(docId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                var dataUser = snapshot.data!.data() as Map<String, dynamic>;
-                return Column(
+      body: FutureBuilder<DocumentSnapshot<Object?>>(
+        future: controller.getDataUser(docId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            var dataUser = snapshot.data!.data() as Map<String, dynamic>;
+            GeoPoint location = dataUser['latlong'];
+            return Stack(
+              children: [
+                GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(location.latitude, location.longitude),
+                    zoom: 14
+                  ),
+                  mapType: MapType.normal,
+                  markers: {
+                    Marker(
+                      markerId: const MarkerId("pembeli"),
+                      position: LatLng(location.latitude, location.longitude),
+                      draggable: true,
+                      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+                      onDragEnd: (value) {},
+                    )
+                  },
+                  onMapCreated: (controllerOnMap) {
+                    // controller.controllerCompleter.complete(controllerOnMap);
+                  },
+                ),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
@@ -236,24 +255,41 @@ class HomePage extends StatelessWidget {
                       ),
                     )
                   ],
-                );
-              }
-              return const CustomLoadingIndicator();
-            }
-          )
-        ]
+                )
+              ]
+            );
+          }
+          return const CustomLoadingIndicator();
+        }
       ),
     );
   }
   // widget maps
-  Widget buildMaps() {
-    return GoogleMap(
-      initialCameraPosition: controller.kGooglePlex,
-      mapType: MapType.normal,
-      markers: controller.markers,
-      onMapCreated: (controllerOnMap) {
-        controller.controllerCompleter.complete(controllerOnMap);
-      },
-    );
-  }
+  // Widget buildMaps() {
+  //   return GetBuilder(
+  //     init: controller,
+  //     builder: (_) {
+  //       return GoogleMap(
+  //         initialCameraPosition: const CameraPosition(
+  //           target: LatLng(-7.315360, 112.797699),
+  //           zoom: 14
+  //         ),
+  //         mapType: MapType.normal,
+  //         markers: {
+  //           Marker(
+  //             markerId: const MarkerId("marking"),
+  //             position: const LatLng(-7.315360, 112.797699),
+  //             draggable: true,
+  //             icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+  //             // icon: controller.markericon,
+  //             onDragEnd: (value) {},
+  //           ),
+  //         },
+  //         onMapCreated: (controllerOnMap) {
+  //           controller.controllerCompleter.complete(controllerOnMap);
+  //         },
+  //       );
+  //     }
+  //   );
+  // }
 }
