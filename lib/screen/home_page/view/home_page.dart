@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                               if (dataUser['role'] == 'pembeli') {
                                 Get.to(() => const SettingPageView(), arguments: docId);
                               } else {
-                                Get.to(() => const SettingPagePedagang(), arguments: docId);
+                                Get.to(() => SettingPagePedagang(), arguments: docId);
                               }
                             },
                             child: Container(

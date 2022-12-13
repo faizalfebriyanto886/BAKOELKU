@@ -10,11 +10,11 @@ import 'package:get/get.dart';
 import '../../main_page/view/main_page_view.dart';
 
 class SettingPagePedagang extends StatelessWidget {
-  const SettingPagePedagang({Key? key}) : super(key: key);
+  final controller = Get.put(SettingController());
+  SettingPagePedagang({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SettingController());
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -89,7 +89,9 @@ class SettingPagePedagang extends StatelessWidget {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              bottomSheetUploadImage();
+                            },
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                               decoration: BoxDecoration(
@@ -184,6 +186,60 @@ class SettingPagePedagang extends StatelessWidget {
           return const CustomLoadingIndicator();
         }
       ),
+    );
+  }
+
+  bottomSheetUploadImage() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+          color: Colors.white
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                controller.imagePickerCamera(fileImage: controller.urlImage);
+                Get.back();
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 50,
+                width: Get.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: primary
+                ),
+                child: const Text("Kamera", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),),
+              ),
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                controller.imagePickerGallery(fileImage: controller.urlImage);
+                Get.back();
+                print('isi File ${controller.urlImage.value}');
+              },
+              child: Container(
+                height: 50,
+                width: Get.width,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: primary
+                ),
+                child: const Text("Gallery", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),),
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }
