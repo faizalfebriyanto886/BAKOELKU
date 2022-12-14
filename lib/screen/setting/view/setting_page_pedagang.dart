@@ -224,7 +224,6 @@ class SettingPagePedagang extends StatelessWidget {
               onTap: () {
                 controller.imagePickerGallery(fileImage: controller.urlImage);
                 Get.back();
-                print('isi File ${controller.urlImage.value}');
               },
               child: Container(
                 height: 50,
