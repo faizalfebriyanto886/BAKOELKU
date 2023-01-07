@@ -102,6 +102,7 @@ class SettingPageView extends StatelessWidget {
                         child: Column(
                           children: [
                             CustomTextFieldSettingWidget(
+                              controller: controller.nameController,
                               colorsBorder: primary,
                               widthSized: Get.width, 
                               hintText: data['name'], 
@@ -109,6 +110,7 @@ class SettingPageView extends StatelessWidget {
                             ),
                             const SizedBox(height: 15),
                             CustomTextFieldSettingWidget(
+                              controller: controller.emailController,
                               colorsBorder: primary, 
                               widthSized: Get.width, 
                               hintText: data['email'], 
@@ -116,6 +118,7 @@ class SettingPageView extends StatelessWidget {
                             ),
                             const SizedBox(height: 15),
                             CustomTextFieldSettingWidget(
+                              controller: controller.noTelpController,
                               colorsBorder: primary,
                               widthSized: Get.width, 
                               hintText: data['no_telp'].toString(), 
@@ -123,6 +126,9 @@ class SettingPageView extends StatelessWidget {
                             ),
                             SizedBox(height: 20),
                             GestureDetector(
+                              onTap: () {
+                                controller.ubahDataCustomer(context);
+                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 height: 40,

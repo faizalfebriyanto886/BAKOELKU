@@ -2,6 +2,7 @@ import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
+import 'package:bakoelku/screen/home_page/view/home_page_list_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -24,33 +25,20 @@ class HomePage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             var dataUser = snapshot.data!.data() as Map<String, dynamic>;
             GeoPoint location = dataUser['latlong'];
+            controller.updateLokasiUser(docId);
             return Stack(
               children: [
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: LatLng(location.latitude, location.longitude),
-                    zoom: 14
+                    zoom: 14, 
                   ),
                   mapType: MapType.normal,
-                  markers: {
-                    dataUser['role'] == 'pembeli'
-                    ? Marker(
-                      markerId: const MarkerId("pembeli"),
-                      position: LatLng(location.latitude, location.longitude),
-                      draggable: true,
-                      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-                      onDragEnd: (value) {},
-                    )
-                    : Marker(
-                      markerId: const MarkerId("pedagang"),
-                      position: LatLng(location.latitude, location.longitude),
-                      draggable: true,
-                      icon: controller.markericon,
-                      onDragEnd: (value) {},
-                    )
-                  },
-                  onMapCreated: (controllerOnMap) {
-                    // controller.controllerCompleter.complete(controllerOnMap);
+                  markers: controller.markers,
+                  onMapCreated: (GoogleMapController homecontroller) {
+                    // controller.controllerCompleter.complete(homecontroller);
+                    controller.markerPedagangSekitar();
+                    controller.markerPembeli(location.latitude, location.longitude);
                   },
                 ),
                 Column(
@@ -135,9 +123,8 @@ class HomePage extends StatelessWidget {
                       ),
                     )
                     : const SizedBox(),
-
                     // for dashboard
-                    dataUser['role'] == 'pembeli' ? dashboardPembeli() : dashboardPedagang()
+                    dataUser['role'] == 'pembeli' ? dashboardPembeli(location) : dashboardPedagang()
                   ],
                 )
               ]
@@ -149,7 +136,7 @@ class HomePage extends StatelessWidget {
     );
   }
   
-  dashboardPembeli() {
+  dashboardPembeli(GeoPoint koordinat) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -166,11 +153,12 @@ class HomePage extends StatelessWidget {
             Text(
               "Cari makanan yang kamu suka", 
               style: TextStyle(
-                fontSize: 18, 
+                fontSize: 18,
                 fontWeight: FontWeight.w500, 
                 color: primary
               ),
-            )
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
