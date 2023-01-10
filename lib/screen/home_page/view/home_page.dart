@@ -2,7 +2,7 @@ import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
-import 'package:bakoelku/screen/home_page/view/home_page_list_pedagang.dart';
+import 'package:bakoelku/screen/home_page/view/home_page_detail_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -107,16 +107,19 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(9),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: primary),
-                              color: Colors.white
-                            ),
-                            child: Icon(
-                              Icons.search,
-                              color: primary,
+                          GestureDetector(
+                            onTap: () => Get.to(() => HomePageDetailPedagang(docId: docId)),
+                            child: Container(
+                              padding: const EdgeInsets.all(9),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: primary),
+                                color: Colors.white
+                              ),
+                              child: Icon(
+                                Icons.search,
+                                color: primary,
+                              ),
                             ),
                           ),
                         ],

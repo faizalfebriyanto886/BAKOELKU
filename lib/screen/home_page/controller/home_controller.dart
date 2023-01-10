@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../view/home_page_detail_pedagang.dart';
 
 class HomeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -15,7 +16,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     customIconMarker();
-    // markPedagangSekitar();
+    markerPedagangSekitar();
     super.onInit();
   }
 
@@ -32,12 +33,12 @@ class HomeController extends GetxController {
         GeoPoint latLng = element['latlong'];
         markers.add(
           Marker(
-            markerId: const MarkerId("pedagang"),
+            markerId: MarkerId(element['name']),
             position: LatLng(latLng.latitude, latLng.longitude),
             icon: markericon,
             draggable: true,
-            onTap: () {
-              print("Sudah ditekan");
+            onTap: () async {
+              Get.to(() => HomePageDetailPedagang(docId: element['uid']));
             },
           ),
         );
