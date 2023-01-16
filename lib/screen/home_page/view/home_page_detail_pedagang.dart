@@ -161,7 +161,7 @@ class HomePageDetailPedagang extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 10),
                                 GestureDetector( // button Next
-                                  onTap: () => Get.to(() => HomePageMenujuCustomer(docId: docId)),
+                                  onTap: () => Get.to(() => HomePageMenujuCustomer(docId: docId, destination: LatLng(location.latitude, location.longitude),)),
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(

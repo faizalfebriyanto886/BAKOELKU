@@ -28,18 +28,23 @@ class HomePage extends StatelessWidget {
             controller.updateLokasiUser(docId);
             return Stack(
               children: [
-                GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(location.latitude, location.longitude),
-                    zoom: 14, 
-                  ),
-                  mapType: MapType.normal,
-                  markers: controller.markers,
-                  onMapCreated: (GoogleMapController homecontroller) {
-                    // controller.controllerCompleter.complete(homecontroller);
-                    controller.markerPedagangSekitar();
-                    controller.markerPembeli(location.latitude, location.longitude);
-                  },
+                GetBuilder(
+                  init: controller,
+                  builder: (_) {
+                    return GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(location.latitude, location.longitude),
+                        zoom: 14, 
+                      ),
+                      mapType: MapType.normal,
+                      markers: controller.markers,
+                      onMapCreated: (GoogleMapController homecontroller) {
+                        // controller.controllerCompleter.complete(homecontroller);
+                        controller.markerPedagangSekitar();
+                        controller.markerPembeli(location.latitude, location.longitude);
+                      },
+                    );
+                  }
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

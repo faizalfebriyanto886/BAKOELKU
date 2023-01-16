@@ -54,6 +54,10 @@ class HomeController extends GetxController {
         position: LatLng(lang, long),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         draggable: true,
+        flat: true,
+        infoWindow: const InfoWindow(
+          title: "Lokasi Anda"
+        )
       )
     );
     update();
