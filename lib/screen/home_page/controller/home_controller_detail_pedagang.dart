@@ -38,12 +38,6 @@ class HomeControllerDetailPedagang extends GetxController {
     return docRef.get();
   }
 
-  List<String> imageCarousel = [
-    'assets/images/mart-dummy.png',
-    'assets/images/mart-dummy.png',
-    'assets/images/mart-dummy.png',
-  ];
-
   Future<Position> getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;

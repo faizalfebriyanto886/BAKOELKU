@@ -1,6 +1,7 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller_menuju_customer.dart';
+import 'package:bakoelku/screen/home_page/view/home_page_selesai_pemesanan.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -12,9 +13,15 @@ import '../../chat/view/chat_page.dart';
 class HomePageMenujuCustomer extends StatelessWidget {
   final String docId;
   final LatLng destination;
+  final String alamatPedagang;
+  final List fotoGerobak;
+  final String namaGerobak;
   const HomePageMenujuCustomer({
     required this.docId,
     required this.destination,
+    required this.alamatPedagang,
+    required this.fotoGerobak,
+    required this.namaGerobak,
     Key? key
   }) : super(key: key);
 
@@ -65,7 +72,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                         child: Column(
                           children: [
                             CarouselSlider(
-                              items: controller.imageCarousel.map((value) => Container(
+                              items: fotoGerobak.map((value) => Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white,
@@ -73,7 +80,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(value,),
+                                  child: Image.network(value),
                                 )
                               )).toList(),
                               options: CarouselOptions(
@@ -96,9 +103,9 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Text(
-                                        "Mie Ayam Solo",
-                                        style: TextStyle(
+                                      Text(
+                                        namaGerobak,
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.black
@@ -140,7 +147,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                                 ),
                                               ),
                                               const SizedBox(width: 10),
-                                              Text(dataUser['alamat'], style: TextStyle(fontSize: 12, color: greyColor),)
+                                              Text(alamatPedagang, style: TextStyle(fontSize: 12, color: greyColor),)
                                             ],
                                           ),
                                           Padding(
@@ -241,6 +248,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                   ),
                                 ),
                                 GestureDetector( // button Sampai Tujuan
+                                  onTap: () => Get.to(() => HomepageSelesaiPemesanan(docId: docId,)),
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                                     decoration: BoxDecoration(

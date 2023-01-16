@@ -1,6 +1,7 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/home_page/view/home_page_menuju_customer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class HomePageDetailPedagang extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             var dataUser = snapshot.data!.data() as Map<String, dynamic>;
             GeoPoint location = dataUser['latlong'];
+            List fotoGerobak = dataUser['foto_gerobak'];
+            print(fotoGerobak);
             return Stack(
               children: [
                 GetBuilder(
@@ -81,7 +84,7 @@ class HomePageDetailPedagang extends StatelessWidget {
                             child: Column(
                               children: [
                                 CarouselSlider(
-                                  items: controller.imageCarousel.map((value) => Container(
+                                  items: fotoGerobak.map((value) => Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white,
@@ -89,7 +92,7 @@ class HomePageDetailPedagang extends StatelessWidget {
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Image.asset(value,),
+                                      child: Image.network(value, gaplessPlayback: true)
                                     )
                                   )).toList(),
                                   options: CarouselOptions(
@@ -113,7 +116,7 @@ class HomePageDetailPedagang extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              dataUser['name'],
+                                              dataUser['nama_gerobak'],
                                               style: const TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w700,
@@ -161,7 +164,16 @@ class HomePageDetailPedagang extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 10),
                                 GestureDetector( // button Next
-                                  onTap: () => Get.to(() => HomePageMenujuCustomer(docId: docId, destination: LatLng(location.latitude, location.longitude),)),
+                                  onTap: () {
+                                    Get.to(() => HomePageMenujuCustomer(
+                                      docId: docId, 
+                                      destination: LatLng(location.latitude, location.longitude), 
+                                      alamatPedagang: dataUser['alamat'], 
+                                      fotoGerobak: fotoGerobak,
+                                      namaGerobak: dataUser['nama_gerobak'],
+                                      )
+                                    );
+                                  },
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
