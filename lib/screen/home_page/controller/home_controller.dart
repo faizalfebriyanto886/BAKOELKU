@@ -47,6 +47,17 @@ class HomeController extends GetxController {
     update();
   }
 
+  markerPedagang(lat, long) {
+    markers.add(
+      Marker(
+        markerId: const MarkerId("Pedagang"),
+        position: LatLng(lat, long),
+        icon: markericon,
+      )
+    );
+    update();
+  }
+
   markerPembeli(lang, long) {
     markers.add(
       Marker(

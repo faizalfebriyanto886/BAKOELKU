@@ -1,7 +1,6 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/home_page/view/home_page_menuju_customer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,6 @@ class HomePageDetailPedagang extends StatelessWidget {
             var dataUser = snapshot.data!.data() as Map<String, dynamic>;
             GeoPoint location = dataUser['latlong'];
             List fotoGerobak = dataUser['foto_gerobak'];
-            print(fotoGerobak);
             return Stack(
               children: [
                 GetBuilder(

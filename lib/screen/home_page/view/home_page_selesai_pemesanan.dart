@@ -1,5 +1,6 @@
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller_selesai_pemesanan.dart';
+import 'package:bakoelku/screen/main_page/view/main_page_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -182,6 +183,7 @@ class HomepageSelesaiPemesanan extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             GestureDetector(
+                              onTap: () => Get.offAll(() => const MainPageView()),
                               child: Container(
                                 height: 40,
                                 width: Get.width * 0.7,
@@ -213,18 +215,5 @@ class HomepageSelesaiPemesanan extends StatelessWidget {
         }
       ),
     );
-  }
-
-  Widget buildMaps() {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/maps_screenshot.png'),
-          fit: BoxFit.cover
-        )
-      ),
-    );
-  }
+  } 
 }

@@ -1,17 +1,22 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:bakoelku/reusable_widget/alert_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SettingController extends GetxController {
-  final urlImage = Rxn<File>();
+  File? urlImages;
+  final validasiUrlImg = false.obs;
+  final ImagePicker picker = ImagePicker();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final noTelpController = TextEditingController();
+  final storageImage = FirebaseStorage.instance;
 
   var uid = Get.arguments;
   
@@ -35,32 +40,60 @@ class SettingController extends GetxController {
     });
   }
 
-  imagePickerGallery({required Rxn<File> fileImage}) async {
-    try {
-      final ImagePicker picker = ImagePicker();
-      final image = await picker.pickImage(
-        source: ImageSource.gallery
-      );
+  Future uploadImageGallery(BuildContext context) async {
+    final pickerFile = await picker.pickImage(source: ImageSource.gallery);
 
-      fileImage.value = File(image!.path);
-    } catch (err) {
+    if (pickerFile != null) {
+      urlImages = File(pickerFile.path);
+      validasiUrlImg.value = true;
+      CustomAlertDialogSuccess(
+        title: "Success", 
+        subTitle: "Gambar Berhasil ditambahkan", 
+        context: context
+      );
+      
+    } else {
       // ignore: avoid_print
-      print(err);
+      print("error Gallery");
+    }
+    update();
+  }
+
+  Future uploadImageCamera() async {
+    final pickerFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickerFile != null) {
+      urlImages = File(pickerFile.path);
+      validasiUrlImg.value = true;
+      // uploadToStorage(namaPedagang, namaGerobak);
+    } else {
+      // ignore: avoid_print
+      print("error Camera");
+    }
+    update();
+  }
+
+  Future uploadToStorage(String namaPedagang, String namaGerobak, BuildContext context) async {
+    var rng = Random();
+    var angka = List.generate(1, (_) => rng.nextInt(10000));
+    var destination = 'Image_gerobak/$namaPedagang';
+
+    try {
+      final ref = FirebaseStorage.instance
+          .ref(destination)
+          .child('$namaGerobak $angka/');
+      await ref.putFile(urlImages!);
+      CustomAlertDialogSuccess(
+        title: "Success", 
+        subTitle: "Gambar Berhasil diupload", 
+        context: context
+      );
+      update();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
     }
   }
 
-  imagePickerCamera({required Rxn<File> fileImage}) async {
-    try {
-      final ImagePicker picker = ImagePicker();
-      final image = await picker.pickImage(
-        source: ImageSource.camera
-      );
-
-      fileImage.value = File(image!.path);
-    } catch (err) {
-      // ignore: avoid_print
-      print(err);
-    }
-  }
 
 }

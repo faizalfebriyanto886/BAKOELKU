@@ -248,7 +248,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                   ),
                                 ),
                                 GestureDetector( // button Sampai Tujuan
-                                  onTap: () => Get.to(() => HomepageSelesaiPemesanan(docId: docId,)),
+                                  onTap: () => Get.offAll(() => HomepageSelesaiPemesanan(docId: docId,)),
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                                     decoration: BoxDecoration(

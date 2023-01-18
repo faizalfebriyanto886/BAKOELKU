@@ -40,8 +40,12 @@ class HomePage extends StatelessWidget {
                       markers: controller.markers,
                       onMapCreated: (GoogleMapController homecontroller) {
                         // controller.controllerCompleter.complete(homecontroller);
-                        controller.markerPedagangSekitar();
-                        controller.markerPembeli(location.latitude, location.longitude);
+                        if (dataUser['role'] == 'pembeli') {
+                          controller.markerPedagangSekitar();
+                          controller.markerPembeli(location.latitude, location.longitude);
+                        } else {
+                          controller.markerPedagang(location.latitude, location.longitude);
+                        }
                       },
                     );
                   }
@@ -132,7 +136,13 @@ class HomePage extends StatelessWidget {
                     )
                     : const SizedBox(),
                     // for dashboard
-                    dataUser['role'] == 'pembeli' ? dashboardPembeli(location) : dashboardPedagang()
+                    dataUser['role'] == 'pembeli' 
+                    ? dashboardPembeli(location) 
+                    : dashboardPedagang(
+                      dataUser['nama_gerobak'], 
+                      dataUser['alamat'], 
+                      dataUser['foto_gerobak']
+                    )
                   ],
                 )
               ]
@@ -173,7 +183,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  dashboardPedagang() {
+  dashboardPedagang(String namaGerobak, String alamat, List fotoGerobak) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -186,7 +196,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
-              items: controller.imageCarousel.map((value) => Container(
+              items: fotoGerobak.map((value) => Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -194,7 +204,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(value,),
+                  child: Image.network(value,),
                 )
               )).toList(),
               options: CarouselOptions(
@@ -211,19 +221,20 @@ class HomePage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Column(
-              children: const [
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Text(
-                  "Mie Ayam Solo",
-                  style: TextStyle(
+                  namaGerobak,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: Colors.black
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
-                  "Kota Surabaya",
-                  style: TextStyle(
+                  alamat,
+                  style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.normal,
                     color: Colors.grey

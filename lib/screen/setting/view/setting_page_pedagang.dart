@@ -80,80 +80,117 @@ class SettingPagePedagang extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: primary.withOpacity(0.15)
-                      ),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              bottomSheetUploadImage();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: primary),
-                                color: Colors.white
-                              ),
-                              child: Row(
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: primary.withOpacity(0.15),
+                            border: Border.all(
+                              color: primary
+                            )
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.asset("assets/icon/upload-image.png", height: 40, width: 40),
-                                  Text(
-                                    "Ubah Tampilan Utama", 
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: hintTextColor
+                                  GestureDetector(
+                                    onTap: () {
+                                      bottomSheetUploadImage(context);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: primary),
+                                        color: Colors.white
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Image.asset("assets/icon/upload-image.png", height: 40, width: 40),
+                                          const SizedBox(width: 20),
+                                          Text(
+                                            "Tambahkan Gambar", 
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: hintTextColor
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  )
+                                  ),
+                                  // const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.uploadToStorage(data['name'], data['nama_gerobak'], context);
+                                    },
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      radius: 20,
+                                      child: Icon(Icons.file_upload_outlined, color: primary,),
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                          const SizedBox(height: 15),
-                          CustomTextFieldSettingWidget(
-                            colorsBorder: primary,
-                            widthSized: Get.width, 
-                            hintText: data['name'], 
-                            prefixText: "Ubah Nama"
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: primary.withOpacity(0.15),
+                            border: Border.all(
+                              color: primary
+                            )
                           ),
-                          const SizedBox(height: 15),
-                          CustomTextFieldSettingWidget(
-                            colorsBorder: primary, 
-                            widthSized: Get.width, 
-                            hintText: data['email'], 
-                            prefixText: "Ubah Email"
-                          ),
-                          const SizedBox(height: 15),
-                          CustomTextFieldSettingWidget(
-                            colorsBorder: primary,
-                            widthSized: Get.width, 
-                            hintText: data['no_telp'].toString(), 
-                            prefixText: "Ubah No Telp",
-                            onChanged: (value) {},
-                          ),
-                          const SizedBox(height: 15),
-                          GestureDetector(
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: primary
+                          child: Column(
+                            children: [
+                              CustomTextFieldSettingWidget(
+                                colorsBorder: primary,
+                                widthSized: Get.width, 
+                                hintText: data['name'], 
+                                prefixText: "Ubah Nama"
                               ),
-                              child: const Text("Simpan", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),),
-                            ),
-                          )
-                        ],
-                      ),
+                              const SizedBox(height: 15),
+                              CustomTextFieldSettingWidget(
+                                colorsBorder: primary, 
+                                widthSized: Get.width, 
+                                hintText: data['email'], 
+                                prefixText: "Ubah Email"
+                              ),
+                              const SizedBox(height: 15),
+                              CustomTextFieldSettingWidget(
+                                colorsBorder: primary,
+                                widthSized: Get.width, 
+                                hintText: data['no_telp'].toString(), 
+                                prefixText: "Ubah No Telp",
+                                onChanged: (value) {},
+                              ),
+                              const SizedBox(height: 15),
+                              GestureDetector(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: primary
+                                  ),
+                                  child: const Text("Simpan", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () {
@@ -189,7 +226,7 @@ class SettingPagePedagang extends StatelessWidget {
     );
   }
 
-  bottomSheetUploadImage() {
+  bottomSheetUploadImage(BuildContext context) {
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
@@ -205,7 +242,7 @@ class SettingPagePedagang extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                controller.imagePickerCamera(fileImage: controller.urlImage);
+                controller.uploadImageCamera();
                 Get.back();
               },
               child: Container(
@@ -222,7 +259,7 @@ class SettingPagePedagang extends StatelessWidget {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                controller.imagePickerGallery(fileImage: controller.urlImage);
+                controller.uploadImageGallery(context);
                 Get.back();
               },
               child: Container(
@@ -235,7 +272,7 @@ class SettingPagePedagang extends StatelessWidget {
                 ),
                 child: const Text("Gallery", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),),
               ),
-            )
+            ),
           ],
         ),
       )
