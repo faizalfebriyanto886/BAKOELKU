@@ -51,6 +51,8 @@ class SettingController extends GetxController {
         subTitle: "Gambar Berhasil ditambahkan", 
         context: context
       );
+
+      update();
       
     } else {
       // ignore: avoid_print
@@ -83,6 +85,14 @@ class SettingController extends GetxController {
           .ref(destination)
           .child('$namaGerobak $angka/');
       await ref.putFile(urlImages!);
+      
+      String urlDownload = await ref.getDownloadURL();
+      
+      FirebaseFirestore.instance.collection('auth').doc(uid).update({
+        'foto_gerobak': FieldValue.arrayUnion([
+          urlDownload,
+        ])
+      });
       CustomAlertDialogSuccess(
         title: "Success", 
         subTitle: "Gambar Berhasil diupload", 

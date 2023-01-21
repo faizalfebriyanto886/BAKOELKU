@@ -195,7 +195,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CarouselSlider(
+            fotoGerobak.isNotEmpty
+            ? CarouselSlider(
               items: fotoGerobak.map((value) => Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -204,7 +205,7 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.network(value,),
+                  child: Image.network(value),
                 )
               )).toList(),
               options: CarouselOptions(
@@ -218,7 +219,8 @@ class HomePage extends StatelessWidget {
                 autoPlayCurve: Curves.bounceIn,
                 scrollDirection: Axis.horizontal,
               ),
-            ),
+            ) 
+            : const SizedBox(),
             const SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

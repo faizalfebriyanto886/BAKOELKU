@@ -22,7 +22,7 @@ class SettingPagePedagang extends StatelessWidget {
         title: const Text("Ubah Data", style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),),
         leading: IconButton(
           onPressed: () {
-            Get.back();  
+            Get.to(() => const MainPageView());
           },
           icon: const Icon(Icons.arrow_back, color: Colors.black)
         ),
