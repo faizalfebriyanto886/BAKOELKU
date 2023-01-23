@@ -9,7 +9,8 @@ import '../view/home_page_detail_pedagang.dart';
 class HomeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference pedagangFirestore = FirebaseFirestore.instance.collection("auth");
-  final Set<Marker> markers = <Marker>{};
+  final Set<Marker> markersPembeli = <Marker>{};
+  final Set<Marker> markersPedagang = <Marker>{};
   final Completer<GoogleMapController> controllerCompleter = Completer();
   BitmapDescriptor markericon = BitmapDescriptor.defaultMarker;
 
@@ -31,7 +32,7 @@ class HomeController extends GetxController {
     pedagangFirestore.where('role', isEqualTo: 'pedagang').get().then((QuerySnapshot querySnapshot) {
       for (var element in querySnapshot.docs) {
         GeoPoint latLng = element['latlong'];
-        markers.add(
+        markersPembeli.add(
           Marker(
             markerId: MarkerId(element['name']),
             position: LatLng(latLng.latitude, latLng.longitude),
@@ -48,7 +49,7 @@ class HomeController extends GetxController {
   }
 
   markerPedagang(lat, long) {
-    markers.add(
+    markersPedagang.add(
       Marker(
         markerId: const MarkerId("Pedagang"),
         position: LatLng(lat, long),
@@ -59,7 +60,7 @@ class HomeController extends GetxController {
   }
 
   markerPembeli(lang, long) {
-    markers.add(
+    markersPembeli.add(
       Marker(
         markerId: const MarkerId("pembeli"),
         position: LatLng(lang, long),
@@ -79,7 +80,7 @@ class HomeController extends GetxController {
     return docRef.get();
   }
 
-  updateLokasiUser(String uid) async {
+  updateLokasiUser(String uid) async { // akan dibuka ketika sudah release
   //  CollectionReference userData = FirebaseFirestore.instance.collection("auth");
   //   Position posisi = await getGeoLocationPosition();
   //   userData.doc(uid).update({

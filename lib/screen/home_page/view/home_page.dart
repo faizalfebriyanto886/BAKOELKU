@@ -37,15 +37,12 @@ class HomePage extends StatelessWidget {
                         zoom: 14, 
                       ),
                       mapType: MapType.normal,
-                      markers: controller.markers,
+                      markers: dataUser['role'] == 'pembeli' ? controller.markersPembeli : controller.markersPedagang,
                       onMapCreated: (GoogleMapController homecontroller) {
                         // controller.controllerCompleter.complete(homecontroller);
-                        if (dataUser['role'] == 'pembeli') {
-                          controller.markerPedagangSekitar();
-                          controller.markerPembeli(location.latitude, location.longitude);
-                        } else {
-                          controller.markerPedagang(location.latitude, location.longitude);
-                        }
+                        controller.markerPedagangSekitar();
+                        controller.markerPembeli(location.latitude, location.longitude);
+                        controller.markerPedagang(location.latitude, location.longitude);
                       },
                     );
                   }
