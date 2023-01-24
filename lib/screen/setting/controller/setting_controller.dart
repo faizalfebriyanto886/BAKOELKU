@@ -16,7 +16,13 @@ class SettingController extends GetxController {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final noTelpController = TextEditingController();
+
+  final nameControllerPedagang = TextEditingController();
+  final emailControllerPedagang = TextEditingController();
+  final noTelpControllerPedagang = TextEditingController();
+
   final storageImage = FirebaseStorage.instance;
+  CollectionReference collectionReferenceAuth = FirebaseFirestore.instance.collection('auth');
 
   var uid = Get.arguments;
   
@@ -25,19 +31,84 @@ class SettingController extends GetxController {
     return docRef.get();
   }
 
-  ubahDataCustomer(BuildContext context) {
-    CollectionReference collectionSettingUpdate = FirebaseFirestore.instance.collection("auth");
-    collectionSettingUpdate.doc(uid).update({
-      'name': nameController.text,
-      'email': emailController.text,
-      'no_telp': int.parse(noTelpController.text),
-    }).then((value) {
-      CustomAlertDialogSuccess(
-        title: "Berhasil", 
-        subTitle: "Akun Berhasil diupdate", 
+  ubahDataPedagang(BuildContext context) {
+    if (nameControllerPedagang.text.isEmpty) {
+      CustomAlertDialogHelp(
+        title: "Mohon Maaf", 
+        subTitle: "Nama tidak boleh kosong", 
         context: context
       );
-    });
+    } else if (emailControllerPedagang.text.isEmpty) {
+      CustomAlertDialogHelp(
+        title: "Mohon Maaf", 
+        subTitle: "Email tidak boleh kosong", 
+        context: context
+      );
+    } else if (noTelpControllerPedagang.text.isEmpty) {
+      CustomAlertDialogHelp(
+        title: "Mohon Maaf", 
+        subTitle: "No telp tidak boleh kosong", 
+        context: context
+      );
+    } else {
+      collectionReferenceAuth.doc(uid).update({
+        'name': nameControllerPedagang.text,
+        'email': emailControllerPedagang.text,
+        'no_telp': int.parse(noTelpControllerPedagang.text),
+      }).then((value) {
+        CustomAlertDialogSuccess(
+          title: "Berhasil Diperbarui", 
+          subTitle: "Akun Berhasil diperbarui", 
+          context: context
+        );
+      }).catchError((onErr) {
+        CustomAlertDialogWarning(
+          title: "Terjadi Kesalahan", 
+          subTitle: onErr, 
+          context: context
+        );
+      });
+    }
+  }
+
+  ubahDataCustomer(BuildContext context) {
+    if (nameController.text.isEmpty) {
+      CustomAlertDialogHelp(
+        title: "Mohon Maaf", 
+        subTitle: "Nama tidak boleh kosong", 
+        context: context
+      );
+    } else if (emailController.text.isEmpty) {
+      CustomAlertDialogHelp(
+        title: "Mohon Maaf", 
+        subTitle: "Email tidak boleh kosong", 
+        context: context
+      );
+    } else if (noTelpController.text.isEmpty) {
+      CustomAlertDialogHelp(
+        title: "Mohon Maaf", 
+        subTitle: "No telp tidak boleh kosong", 
+        context: context
+      );
+    } else {
+      collectionReferenceAuth.doc(uid).update({
+        'name': nameController.text,
+        'email': emailController.text,
+        'no_telp': int.parse(noTelpController.text),
+      }).then((value) {
+        CustomAlertDialogSuccess(
+          title: "Berhasil Diperbarui", 
+          subTitle: "Akun Berhasil diperbarui", 
+          context: context
+        );
+      }).catchError((onErr) {
+        CustomAlertDialogWarning(
+          title: "Terjadi Kesalahan", 
+          subTitle: onErr, 
+          context: context
+        );
+      });
+    }
   }
 
   Future uploadImageGallery(BuildContext context) async {

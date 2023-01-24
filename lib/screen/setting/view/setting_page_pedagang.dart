@@ -5,6 +5,7 @@ import 'package:bakoelku/screen/setting/controller/setting_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../main_page/view/main_page_view.dart';
@@ -22,12 +23,12 @@ class SettingPagePedagang extends StatelessWidget {
         title: const Text("Ubah Data", style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),),
         leading: IconButton(
           onPressed: () {
-            Get.to(() => const MainPageView());
+            Get.off(() => const MainPageView());
           },
           icon: const Icon(Icons.arrow_back, color: Colors.black)
         ),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
+      body: FutureBuilder<DocumentSnapshot<Object?>>(
         future: controller.getSettings(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -153,6 +154,7 @@ class SettingPagePedagang extends StatelessWidget {
                           child: Column(
                             children: [
                               CustomTextFieldSettingWidget(
+                                controller: controller.nameControllerPedagang,
                                 colorsBorder: primary,
                                 widthSized: Get.width, 
                                 hintText: data['name'], 
@@ -160,6 +162,7 @@ class SettingPagePedagang extends StatelessWidget {
                               ),
                               const SizedBox(height: 15),
                               CustomTextFieldSettingWidget(
+                                controller: controller.emailControllerPedagang,
                                 colorsBorder: primary, 
                                 widthSized: Get.width, 
                                 hintText: data['email'], 
@@ -167,14 +170,27 @@ class SettingPagePedagang extends StatelessWidget {
                               ),
                               const SizedBox(height: 15),
                               CustomTextFieldSettingWidget(
+                                controller: controller.noTelpControllerPedagang,
                                 colorsBorder: primary,
                                 widthSized: Get.width, 
                                 hintText: data['no_telp'].toString(), 
                                 prefixText: "Ubah No Telp",
+                                textInputType: TextInputType.number,
+                                textInputFormatter: [
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]'),
+                                  ),
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r'^0+'), //users can't type 0 at 1st position
+                                  ),
+                                ],
                                 onChanged: (value) {},
                               ),
                               const SizedBox(height: 15),
                               GestureDetector(
+                                onTap: () {
+                                  controller.ubahDataPedagang(context);
+                                },
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 40,
@@ -195,7 +211,8 @@ class SettingPagePedagang extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         FirebaseAuth.instance.signOut();
-                        Get.to(() => const MainPageView()); 
+                        Get.to(() => const MainPageView());
+                        controller.update();
                       },
                       child: Container(
                         height: 40,

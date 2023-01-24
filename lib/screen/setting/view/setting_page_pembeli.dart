@@ -7,6 +7,7 @@ import 'package:bakoelku/screen/setting/controller/setting_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../reusable_widget/custom_text_field.dart';
 
@@ -106,7 +107,10 @@ class SettingPageView extends StatelessWidget {
                               colorsBorder: primary,
                               widthSized: Get.width, 
                               hintText: data['name'], 
-                              prefixText: "Ubah Nama"
+                              prefixText: "Ubah Nama",
+                              onChanged: (value) {
+                                
+                              },
                             ),
                             const SizedBox(height: 15),
                             CustomTextFieldSettingWidget(
@@ -114,7 +118,10 @@ class SettingPageView extends StatelessWidget {
                               colorsBorder: primary, 
                               widthSized: Get.width, 
                               hintText: data['email'], 
-                              prefixText: "Ubah Email"
+                              prefixText: "Ubah Email",
+                              onChanged: (value) {
+                                
+                              },
                             ),
                             const SizedBox(height: 15),
                             CustomTextFieldSettingWidget(
@@ -122,7 +129,19 @@ class SettingPageView extends StatelessWidget {
                               colorsBorder: primary,
                               widthSized: Get.width, 
                               hintText: data['no_telp'].toString(), 
-                              prefixText: "Ubah No Telp"
+                              prefixText: "Ubah No Telp",
+                              textInputType: TextInputType.number,
+                              textInputFormatter: [
+                                FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]'),
+                                ),
+                                FilteringTextInputFormatter.deny(
+                                  RegExp(r'^0+'), //users can't type 0 at 1st position
+                                ),
+                              ],
+                              onChanged: (value) {
+                                
+                              },
                             ),
                             SizedBox(height: 20),
                             GestureDetector(

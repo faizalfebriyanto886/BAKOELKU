@@ -8,14 +8,19 @@ class CustomTextFieldSettingWidget extends StatelessWidget {
   final Color colorsBorder;
   final String hintText;
   final String prefixText;
+  final TextInputType? textInputType;
+  final List<TextInputFormatter>? textInputFormatter;
   final Function(String)? onChanged;
+
   const CustomTextFieldSettingWidget({
     this.controller,
+    this.textInputType,
     required this.colorsBorder,
     required this.widthSized,
     required this.hintText,
     required this.prefixText,
     this.onChanged,
+    this.textInputFormatter,
     Key? key
   }) : super(key: key);
 
@@ -25,7 +30,9 @@ class CustomTextFieldSettingWidget extends StatelessWidget {
       width: widthSized,
       child: TextField(
         controller: controller,
+        inputFormatters: textInputFormatter,
         textAlign: TextAlign.end,
+        keyboardType: textInputType,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(10),
           filled: true,
