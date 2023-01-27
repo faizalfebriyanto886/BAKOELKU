@@ -107,60 +107,84 @@ class HomePageDetailPedagang extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                                  child: Row(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              dataUser['nama_gerobak'],
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black
-                                              ),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              dataUser['alamat'],
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                                color: Colors.grey
-                                              ),
-                                            ),
-                                            
-                                          ],
+                                      Text(
+                                        dataUser['nama_gerobak'],
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black
                                         ),
                                       ),
-
-                                      CircleAvatar(
-                                        backgroundColor: primary,
-                                        radius: 18,
-                                        child: const Icon(
-                                          Icons.phone,
-                                          color: Colors.white,
-                                          size: 18,
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        dataUser['alamat'],
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.grey
                                         ),
                                       ),
-                                      const SizedBox(width: 10),
-                                      GestureDetector(
-                                        onTap: () => Get.to(() => const ChatPageView()),
-                                        child: CircleAvatar(
-                                          backgroundColor: primary,
-                                          radius: 18,
-                                          child: const Icon(
-                                            Icons.messenger,
-                                            color: Colors.white,
-                                            size: 18,
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              bottomSheetMenu();
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                color: primary
+                                              ),
+                                              child: const Text(
+                                                "Lihat Menu",
+                                                 style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500
+                                                 ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      )
+
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundColor: primary,
+                                                radius: 18,
+                                                child: const Icon(
+                                                  Icons.phone,
+                                                  color: Colors.white,
+                                                  size: 18,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              GestureDetector(
+                                                onTap: () => Get.to(() => const ChatPageView()),
+                                                child: CircleAvatar(
+                                                  backgroundColor: primary,
+                                                  radius: 18,
+                                                  child: const Icon(
+                                                    Icons.messenger,
+                                                    color: Colors.white,
+                                                    size: 18,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 5),
                                 GestureDetector( // button Next
                                   onTap: () {
                                     Get.to(() => HomePageMenujuCustomer(
@@ -215,16 +239,49 @@ class HomePageDetailPedagang extends StatelessWidget {
     );
   }
 
-  Widget buildMaps() {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/maps_screenshot.png'),
-          fit: BoxFit.cover
-        )
-      ),
+  bottomSheetMenu() {
+    Get.bottomSheet(
+      
+      Container(
+        height: Get.height * 0.7,
+        width: Get.width,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+           color: Colors.white
+        ),
+        child: ListView.separated(
+          itemCount: 10,
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                border: Border.all(color: primary)
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Image.asset('assets/icon/bakoelku-circle.png', height: 50)
+                  ),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text("Pentol", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),),
+                      SizedBox(height: 10),
+                      Text("Rp. 14000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.green),)
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      )
     );
   }
 }
