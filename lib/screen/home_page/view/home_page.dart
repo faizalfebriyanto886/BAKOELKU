@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 
 class HomePage extends StatelessWidget {
   final String docId;
@@ -219,26 +220,57 @@ class HomePage extends StatelessWidget {
             ) 
             : const SizedBox(),
             const SizedBox(height: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  namaGerobak,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      namaGerobak,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      alamat,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  alamat,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey
-                  ),
-                ),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: primary,
+                      radius: 18,
+                      child: const Icon(
+                        Iconsax.notification5,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => Get.to(() => const ChatPageView()),
+                      child: CircleAvatar(
+                        backgroundColor: primary,
+                        radius: 18,
+                        child: const Icon(
+                          Icons.messenger,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
             const SizedBox(height: 15),
@@ -257,7 +289,7 @@ class HomePage extends StatelessWidget {
                         color: primary,
                       ),
                       child: const Text(
-                        "Ubah Tampilan",
+                        "Pengaturan",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -267,26 +299,23 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                CircleAvatar(
-                  backgroundColor: primary,
-                  radius: 18,
-                  child: const Icon(
-                    Icons.phone,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 15),
                 GestureDetector(
-                  onTap: () => Get.to(() => const ChatPageView()),
-                  child: CircleAvatar(
-                    backgroundColor: primary,
-                    radius: 18,
-                    child: const Icon(
-                      Icons.messenger,
-                      color: Colors.white,
-                      size: 18,
+                  child: Container(
+                    height: 40,
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: primary,
+                    ),
+                    child: const Text(
+                      "Atur Menu",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
                 )
