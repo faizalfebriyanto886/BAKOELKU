@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import '../../main_page/view/main_page_view.dart';
 
 class SettingPagePedagang extends StatelessWidget {
@@ -206,6 +205,111 @@ class SettingPagePedagang extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 20),
+                    GetBuilder(
+                      init: controller,
+                      builder: (_) {
+                        return Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: primary.withOpacity(0.15),
+                            border: Border.all(
+                              color: primary
+                            )
+                          ),
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  controller.selectTimeBuka(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: primary),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Jam Buka",
+                                        style: TextStyle(
+                                          color: primary,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        controller.validationJamBuka.value == false
+                                        ? data['jam_buka']
+                                        : controller.timeBuka.format(context),
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontSize: 14
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.selectTimeTutup(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: primary),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Jam Tutup",
+                                        style: TextStyle(
+                                          color: primary,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Text(
+                                        controller.validationJamTutup.value == false
+                                        ? data['jam_tutup']
+                                        : controller.timeTutup.format(context),
+                                        style: TextStyle(
+                                          color: greyColor,
+                                          fontSize: 14
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.updateJam(context);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: primary
+                                  ),
+                                  child: const Text("Tambahkan", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500),),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      }
                     ),
                     const SizedBox(height: 20),
                     GestureDetector(

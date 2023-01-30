@@ -27,6 +27,7 @@ class HomePageDetailPedagang extends StatelessWidget {
             var dataUser = snapshot.data!.data() as Map<String, dynamic>;
             GeoPoint location = dataUser['latlong'];
             List fotoGerobak = dataUser['foto_gerobak'];
+            List menu = dataUser['menu'];
             return Stack(
               children: [
                 GetBuilder(
@@ -128,43 +129,33 @@ class HomePageDetailPedagang extends StatelessWidget {
                                           color: Colors.grey
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
                                       Row(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              bottomSheetMenu();
-                                            },
-                                            child: Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                color: primary
-                                              ),
-                                              child: const Text(
-                                                "Lihat Menu",
-                                                 style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w500
-                                                 ),
-                                              ),
-                                            ),
-                                          ),
-
                                           Row(
                                             children: [
-                                              CircleAvatar(
-                                                backgroundColor: primary,
-                                                radius: 18,
-                                                child: const Icon(
-                                                  Icons.phone,
-                                                  color: Colors.white,
-                                                  size: 18,
+                                              GestureDetector(
+                                                onTap: () {
+                                                  bottomSheetMenu(menu);
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10),
+                                                    color: primary
+                                                  ),
+                                                  child: const Text(
+                                                    "Lihat Menu",
+                                                     style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.w500
+                                                     ),
+                                                  ),
                                                 ),
                                               ),
-                                              const SizedBox(width: 10),
+                                              const SizedBox(width: 15),
                                               GestureDetector(
                                                 onTap: () => Get.to(() => const ChatPageView()),
                                                 child: CircleAvatar(
@@ -178,7 +169,24 @@ class HomePageDetailPedagang extends StatelessWidget {
                                                 ),
                                               )
                                             ],
-                                          )
+                                          ),
+
+                                          Container(
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              color: Colors.white,
+                                              border: Border.all(color: primary)
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Buka : ${dataUser['jam_buka']}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: primary),),
+                                                const SizedBox(height: 10),
+                                                Text("Tutup : ${dataUser['jam_tutup']}", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: primary),)
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -239,9 +247,8 @@ class HomePageDetailPedagang extends StatelessWidget {
     );
   }
 
-  bottomSheetMenu() {
+  bottomSheetMenu(List menuList) {
     Get.bottomSheet(
-      
       Container(
         height: Get.height * 0.7,
         width: Get.width,
@@ -251,7 +258,7 @@ class HomePageDetailPedagang extends StatelessWidget {
            color: Colors.white
         ),
         child: ListView.separated(
-          itemCount: 10,
+          itemCount: menuList.length,
           separatorBuilder: (context, index) => const SizedBox(height: 10),
           itemBuilder: (context, index) {
             return Container(
@@ -265,15 +272,15 @@ class HomePageDetailPedagang extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.white,
-                    child: Image.asset('assets/icon/bakoelku-circle.png', height: 50)
+                    child: Image.asset('assets/icon/icon_menu_2.png', height: 50)
                   ),
                   const SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text("Pentol", style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),),
-                      SizedBox(height: 10),
-                      Text("Rp. 14000", style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.green),)
+                    children: [
+                      Text(menuList[index]['nama'], style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),),
+                      const SizedBox(height: 10),
+                      Text(menuList[index]['harga'].toString(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.green),)
                     ],
                   )
                 ],

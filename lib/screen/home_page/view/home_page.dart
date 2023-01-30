@@ -3,6 +3,8 @@ import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
 import 'package:bakoelku/screen/home_page/view/home_page_detail_pedagang.dart';
+import 'package:bakoelku/screen/notifikasi/view/notifikasi_page.dart';
+import 'package:bakoelku/screen/setting/view/setting_page_menu_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pembeli.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -195,16 +197,21 @@ class HomePage extends StatelessWidget {
           children: [
             fotoGerobak.isNotEmpty
             ? CarouselSlider(
-              items: fotoGerobak.map((value) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  border: Border.all(color: primary)
+              items: fotoGerobak.map((value) => GestureDetector(
+                onTap: () {
+                  print(value);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    border: Border.all(color: primary)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(value),
+                  )
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(value),
-                )
               )).toList(),
               options: CarouselOptions(
                 height: 90,
@@ -247,13 +254,16 @@ class HomePage extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: primary,
-                      radius: 18,
-                      child: const Icon(
-                        Iconsax.notification5,
-                        color: Colors.white,
-                        size: 18,
+                    GestureDetector(
+                      onTap: () => Get.to(() => NotifikasiPage()),
+                      child: CircleAvatar(
+                        backgroundColor: primary,
+                        radius: 18,
+                        child: const Icon(
+                          Iconsax.notification5,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -301,6 +311,9 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(width: 15),
                 GestureDetector(
+                  onTap: () {
+                    Get.to(() => SettingPageMenuPedagang(), arguments: docId);
+                  },
                   child: Container(
                     height: 40,
                     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
