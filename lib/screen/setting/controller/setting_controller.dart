@@ -220,10 +220,6 @@ class SettingController extends GetxController {
     update();
   }
 
-  valueOfArray() {
-    
-  }
-
   ubahMenuToFirestore() {
     // FirebaseFirestore.instance.collection("auth").doc(uid).update({
     //     'menu': FieldValue.arrayUnion([
@@ -234,9 +230,7 @@ class SettingController extends GetxController {
     //     ])
     //   })
     FirebaseFirestore.instance.collection("auth").doc(uid).update({
-      'menu': [
-        // 0: "sensor"
-      ]
+      // 'menu': ''
     });
   }
 

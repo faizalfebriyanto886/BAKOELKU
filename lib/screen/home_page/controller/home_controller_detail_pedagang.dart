@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -36,6 +38,24 @@ class HomeControllerDetailPedagang extends GetxController {
   Future<DocumentSnapshot<Object?>> getDataUser(String uid) {
     DocumentReference docRef = FirebaseFirestore.instance.collection("auth").doc(uid);
     return docRef.get();
+  }
+
+  tambahNotifikasi(String uidPedagang, String namaPembeli) {
+    const characters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    Random randomCode = Random();
+
+    String getRandomString(int length) => String.fromCharCodes(Iterable.generate(length, (_) => characters.codeUnitAt(randomCode.nextInt(characters.length))));
+    String docIDGenerate = getRandomString(20);
+
+    FirebaseFirestore.instance.collection('notifikasi').doc(docIDGenerate).set({
+      "title": "Pembeli Menuju Lokasi",
+      "nama_pembeli": namaPembeli,
+      "uid_pedagang": uidPedagang,
+      "uid_pembeli": "",
+      "notifikasi_status": false,
+      "tanggal": DateTime.now(),
+      "docId": docIDGenerate
+    });
   }
 
   Future<Position> getGeoLocationPosition() async {

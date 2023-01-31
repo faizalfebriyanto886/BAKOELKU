@@ -14,160 +14,157 @@ class SettingPageMenuPedagang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: const Text("Pengaturan Menu", style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back, color: Colors.black)
-        ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        color: Colors.white,
-        child: GestureDetector(
-          onTap: () {
-            bottomSheetAddMenu(context);
-          },
-          child: Container(
-            height: 45,
-            width: Get.width,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: primary
+    return StreamBuilder<DocumentSnapshot<Object?>>(
+      stream: FirebaseFirestore.instance.collection("auth").doc(controller.uid).snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          var data = snapshot.data!.data() as Map<String, dynamic>;
+          List menuList = data['menu'];
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.white,
+              title: const Text("Pengaturan Menu", style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),),
+              leading: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(Icons.arrow_back, color: Colors.black)
+              ),
             ),
-            child: const Text("Tambah Menu", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),),
-          ),
-        ),
-      ),
-      body: FutureBuilder<DocumentSnapshot<Object?>>(
-        future: controller.getSettings(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            var data = snapshot.data!.data() as Map<String, dynamic>;
-            List menuList = data['menu'];
-            return SingleChildScrollView(
-              child: GetBuilder(
-                init: controller,
-                builder: (_) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        child: Text(
-                          "List Menu",
-                          style: TextStyle(
-                            color: primary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+            bottomNavigationBar: Container(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              color: Colors.white,
+              child: GestureDetector(
+                onTap: () {
+                  bottomSheetAddMenu(context);
+                },
+                child: Container(
+                  height: 45,
+                  width: Get.width,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: primary
+                  ),
+                  child: const Text("Tambah Menu", style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),),
+                ),
+              ),
+            ),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: Text(
+                      "List Menu",
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  ListView.separated(
+                    itemCount: menuList.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 10,),
+                    separatorBuilder: (context, index) => const SizedBox(height: 15,), 
+                    itemBuilder: (context, index) {
+                      return Dismissible(
+                        key: const Key("Items"),
+                        onDismissed: (direction) {},
+                        confirmDismiss: (direction) {
+                          return Alert(
+                            context: context,
+                            type: AlertType.warning,
+                            title: "Konfirmasi penghapusan menu",
+                            desc: "Apakah anda yakin menghapus menu ini ?",
+                            buttons: [
+                              DialogButton(
+                                onPressed: () {
+                                  controller.deleteMenuToFirestore(menuList[index]);
+                                  Navigator.of(context).pop(true);
+                                },
+                                color: primary,
+                                child: const Text(
+                                  "Hapus",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                              DialogButton(
+                                onPressed: () => Get.back(canPop: false),
+                                color: danger,
+                                child: const Text(
+                                  "Cancel",
+                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                ),
+                              )
+                            ],
+                          ).show();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: primary)
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(2),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white
+                                ),
+                                child: Image.asset("assets/icon/icon_menu_2.png", height: 40,),
+                              ),
+                              const SizedBox(width: 15),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(menuList[index]['nama'], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
+                                    const SizedBox(height: 8),
+                                    Text("Rp.${menuList[index]['harga'].toString()}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: greyColor),)
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  bottomSheetUbahMenu();
+                                  // controller.deleteMenuToFirestore(menuList[index]);
+                                },
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Icon(Iconsax.edit_25, color: Colors.white, size: 18,),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      
-                      ListView.separated(
-                        itemCount: menuList.length,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 10,),
-                        separatorBuilder: (context, index) => const SizedBox(height: 15,), 
-                        itemBuilder: (context, index) {
-                          return Dismissible(
-                            key: const Key("Items"),
-                            onDismissed: (direction) {},
-                            confirmDismiss: (direction) {
-                              return Alert(
-                                context: context,
-                                type: AlertType.warning,
-                                title: "Konfirmasi penghapusan menu",
-                                desc: "Apakah anda yakin menghapus menu ini ?",
-                                buttons: [
-                                  DialogButton(
-                                    onPressed: () async {
-                                      await controller.deleteMenuToFirestore(menuList[index]);
-                                      Get.back();
-                                    },
-                                    color: primary,
-                                    child: const Text(
-                                      "Hapus",
-                                      style: TextStyle(color: Colors.white, fontSize: 20),
-                                    ),
-                                  ),
-                                  DialogButton(
-                                    onPressed: () => Get.back(canPop: false),
-                                    color: danger,
-                                    child: const Text(
-                                      "Cancel",
-                                      style: TextStyle(color: Colors.white, fontSize: 20),
-                                    ),
-                                  )
-                                ],
-                              ).show();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: primary)
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(2),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white
-                                    ),
-                                    child: Image.asset("assets/icon/icon_menu_2.png", height: 40,),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(menuList[index]['nama'], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
-                                        const SizedBox(height: 8),
-                                        Text("Rp.${menuList[index]['harga'].toString()}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: greyColor),)
-                                      ],
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      bottomSheetUbahMenu();
-                                      // controller.deleteMenuToFirestore(menuList[index]);
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        color: primary,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Icon(Iconsax.edit_25, color: Colors.white, size: 18,),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        },                
-                      )
-                    ]
-                  );
-                }
+                      );
+                    },                
+                  )
+                ]
               )
-            );
-          }
-          return const CustomLoadingIndicator();
+            )
+          );
         }
-      ),
+        return Container(
+          color: Colors.white,
+          child: const CustomLoadingIndicator());
+      }
     );
   }
 

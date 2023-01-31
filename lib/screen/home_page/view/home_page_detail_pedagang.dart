@@ -201,8 +201,9 @@ class HomePageDetailPedagang extends StatelessWidget {
                                       alamatPedagang: dataUser['alamat'], 
                                       fotoGerobak: fotoGerobak,
                                       namaGerobak: dataUser['nama_gerobak'],
-                                      )
+                                      ),
                                     );
+                                    controller.tambahNotifikasi(docId, dataUser['name']);
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(8),

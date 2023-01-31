@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bakoelku/reusable_widget/alert_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
@@ -80,6 +81,24 @@ class HomeController extends GetxController {
     return docRef.get();
   }
 
+  // getNotifikasi(String uidPedagang) async {
+  //   FirebaseFirestore.instance.collection('notifikasi').where("uid_pedagang", isEqualTo: uidPedagang).get().then((value) {
+  //     value.docs.forEach((element) {
+  //       print(element.data()['notifikasi_status']);
+  //     });
+  //   });
+  // }
+
+  updateNotifikasiStatus(String uidPedagang) async {
+    FirebaseFirestore.instance.collection("notifikasi").where("uid_pedagang", isEqualTo: uidPedagang).get().then((value) {
+      for (var element in value.docs) {
+        FirebaseFirestore.instance.collection("notifikasi").doc(element.data()['docId']).update({
+          'notifikasi_status': true,
+        });
+      }
+    });
+  }
+
   updateLokasiUser(String uid) async { // akan dibuka ketika sudah release
   //  CollectionReference userData = FirebaseFirestore.instance.collection("auth");
   //   Position posisi = await getGeoLocationPosition();
@@ -92,6 +111,19 @@ class HomeController extends GetxController {
   //     // ignore: avoid_print
   //     print(err);
   //   });
+  }
+
+  hapusFotoGerobak(String urlImage, String uid, BuildContext context) {
+    FirebaseFirestore.instance.collection("auth").doc(uid).update({
+      "foto_gerobak": FieldValue.arrayRemove([urlImage])
+    }).then((value) {
+      CustomAlertDialogSuccess(
+        title: "Berhasil", 
+        subTitle: "Foto berhasil dihapus", 
+        context: context
+      );
+      update();
+    });
   }
 
   Future<Position> getGeoLocationPosition() async {

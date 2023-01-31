@@ -3,6 +3,7 @@ import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
 import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
 import 'package:bakoelku/screen/home_page/view/home_page_detail_pedagang.dart';
+import 'package:bakoelku/screen/main_page/view/main_page_view.dart';
 import 'package:bakoelku/screen/notifikasi/view/notifikasi_page.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_menu_pedagang.dart';
 import 'package:bakoelku/screen/setting/view/setting_page_pedagang.dart';
@@ -141,7 +142,8 @@ class HomePage extends StatelessWidget {
                     : dashboardPedagang(
                       dataUser['nama_gerobak'], 
                       dataUser['alamat'], 
-                      dataUser['foto_gerobak']
+                      dataUser['foto_gerobak'],
+                      context
                     )
                   ],
                 )
@@ -183,7 +185,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  dashboardPedagang(String namaGerobak, String alamat, List fotoGerobak) {
+  dashboardPedagang(String namaGerobak, String alamat, List fotoGerobak, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -199,7 +201,40 @@ class HomePage extends StatelessWidget {
             ? CarouselSlider(
               items: fotoGerobak.map((value) => GestureDetector(
                 onTap: () {
-                  print(value);
+                  Get.bottomSheet(
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration:  const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)
+                        )
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              controller.hapusFotoGerobak(value, docId, context);
+                              Get.back();
+                              Get.to(() => const MainPageView());
+                            },
+                            child: Container(
+                              height: 40,
+                              width: Get.width,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: danger
+                              ),
+                              child: const Text("Hapus", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  );
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -255,15 +290,32 @@ class HomePage extends StatelessWidget {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () => Get.to(() => NotifikasiPage()),
-                      child: CircleAvatar(
-                        backgroundColor: primary,
-                        radius: 18,
-                        child: const Icon(
-                          Iconsax.notification5,
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                      onTap: () {
+                        Get.to(() => const NotifikasiPage());
+                        // controller.updateNotifikasiStatus(docId);
+                        // controller.getNotifikasi(docId);
+                      },
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: primary,
+                            radius: 18,
+                            child: const Icon(
+                              Iconsax.notification5,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ),
+                          // Container(
+                          //   height: 10,
+                          //   width: 10,
+                          //   decoration: BoxDecoration(
+                          //     shape: BoxShape.circle,
+                          //     color: danger
+                          //   ),
+                          // ),
+                        ],
                       ),
                     ),
                     const SizedBox(width: 10),
