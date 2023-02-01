@@ -4,6 +4,7 @@ import 'package:bakoelku/screen/home_page/view/home_page_menuju_customer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../chat/view/chat_page.dart';
@@ -136,38 +137,32 @@ class HomePageDetailPedagang extends StatelessWidget {
                                           Row(
                                             children: [
                                               GestureDetector(
-                                                onTap: () {
-                                                  bottomSheetMenu(menu);
-                                                },
-                                                child: Container(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10),
-                                                    color: primary
-                                                  ),
-                                                  child: const Text(
-                                                    "Lihat Menu",
-                                                     style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 14,
-                                                      fontWeight: FontWeight.w500
-                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 15),
-                                              GestureDetector(
                                                 onTap: () => Get.to(() => const ChatPageView()),
                                                 child: CircleAvatar(
                                                   backgroundColor: primary,
-                                                  radius: 18,
+                                                  radius: 22,
                                                   child: const Icon(
                                                     Icons.messenger,
                                                     color: Colors.white,
-                                                    size: 18,
+                                                    size: 22,
                                                   ),
                                                 ),
-                                              )
+                                              ),
+                                              const SizedBox(width: 10),
+                                              GestureDetector(
+                                                onTap: () async {
+                                                  FlutterPhoneDirectCaller.callNumber('0${dataUser['no_telp']}');
+                                                },
+                                                child: CircleAvatar(
+                                                  backgroundColor: primary,
+                                                  radius: 22,
+                                                  child: const Icon(
+                                                    Icons.phone,
+                                                    color: Colors.white,
+                                                    size: 22,
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
 
@@ -193,43 +188,72 @@ class HomePageDetailPedagang extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 5),
-                                GestureDetector( // button Next
-                                  onTap: () {
-                                    Get.to(() => HomePageMenujuCustomer(
-                                      docId: docId, 
-                                      destination: LatLng(location.latitude, location.longitude), 
-                                      alamatPedagang: dataUser['alamat'], 
-                                      fotoGerobak: fotoGerobak,
-                                      namaGerobak: dataUser['nama_gerobak'],
-                                      ),
-                                    );
-                                    controller.tambahNotifikasi(docId, dataUser['name']);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: primary,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text(
-                                          "Menuju Lokasi",
-                                          style: TextStyle(
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        bottomSheetMenu(menu);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: primary
+                                        ),
+                                        child: const Text(
+                                          "Lihat Menu",
+                                            style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 14,
-                                            fontWeight: FontWeight.bold
-                                          ),
+                                            fontWeight: FontWeight.w500
+                                            ),
                                         ),
-                                        Icon(
-                                          Icons.keyboard_arrow_right_outlined,
-                                          color: Colors.white,
-                                          size: 28,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    GestureDetector( // button Next
+                                      onTap: () {
+                                        Get.to(() => HomePageMenujuCustomer(
+                                          docId: docId, 
+                                          destination: LatLng(location.latitude, location.longitude), 
+                                          alamatPedagang: dataUser['alamat'], 
+                                          fotoGerobak: fotoGerobak,
+                                          namaGerobak: dataUser['nama_gerobak'],
+                                          noTelp: dataUser['no_telp'].toString(),
+                                          ),
+                                        );
+                                        controller.tambahNotifikasi(docId, dataUser['name']);
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 9),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: primary,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const [
+                                            Text(
+                                              "Menuju Lokasi",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                            SizedBox(width: 15),
+                                            Icon(
+                                              Icons.keyboard_arrow_right_outlined,
+                                              color: Colors.white,
+                                              size: 28,
+                                            )
+                                          ],
                                         )
-                                      ],
-                                    )
-                                  ),
+                                      ),
+                                    ),
+                                  ],
                                 )
                               ],
                             ),

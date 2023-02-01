@@ -15,10 +15,13 @@ class HomeController extends GetxController {
   final Completer<GoogleMapController> controllerCompleter = Completer();
   BitmapDescriptor markericon = BitmapDescriptor.defaultMarker;
 
+  List pedagangFavorit = [];
+
   @override
   void onInit() {
     customIconMarker();
     markerPedagangSekitar();
+    listPedagangFavorit();
     super.onInit();
   }
 
@@ -27,6 +30,14 @@ class HomeController extends GetxController {
       markericon = value;
     });
     update();
+  }
+
+  listPedagangFavorit() {
+    pedagangFirestore.where('role', isEqualTo: 'pedagang').get().then((value) {
+      value.docs.forEach((element) {
+        pedagangFavorit.add(element.data());
+      });
+    });
   }
   
    markerPedagangSekitar() async {

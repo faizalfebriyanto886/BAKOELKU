@@ -54,91 +54,11 @@ class HomePage extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    dataUser['role'] == 'pembeli'
-                    ? Padding(
-                      padding: const EdgeInsets.only(top: 60),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(() => const SettingPageView(), arguments: docId);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: primary),
-                                color: Colors.white
-                              ),
-                              child: Icon(
-                                Icons.settings,
-                                color: primary,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.65,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(9),
-                                filled: true,
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(width: 1, color: primary),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(width: 1, color: primary),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(width: 1, color: primary),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1,)
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1,color: Colors.black)
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1,color: primary)
-                                ),
-                                hintText: "Mencari Pedagang kesukaanmu...",
-                                hintStyle: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xFFB3B1B1)
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => Get.to(() => HomePageDetailPedagang(docId: docId)),
-                            child: Container(
-                              padding: const EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: primary),
-                                color: Colors.white
-                              ),
-                              child: Icon(
-                                Icons.search,
-                                color: primary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                    : const SizedBox(),
+                    const SizedBox(),
+
                     // for dashboard
                     dataUser['role'] == 'pembeli' 
-                    ? dashboardPembeli(location) 
+                    ? dashboardPembeli(location, dataUser) 
                     : dashboardPedagang(
                       dataUser['nama_gerobak'], 
                       dataUser['alamat'], 
@@ -156,7 +76,7 @@ class HomePage extends StatelessWidget {
     );
   }
   
-  dashboardPembeli(GeoPoint koordinat) {
+  dashboardPembeli(GeoPoint koordinat, Map dataFavorit) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -168,17 +88,138 @@ class HomePage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset("assets/images/logo_bakoelku.png", height: 150),
-            const SizedBox(height: 15),
-            Text(
-              "Cari makanan yang kamu suka", 
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500, 
-                color: primary
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: Get.width * 0.65,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(9),
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(width: 1, color: primary),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,)
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: Colors.black)
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.all(Radius.circular(4)),
+                          borderSide: BorderSide(width: 1,color: primary)
+                        ),
+                        hintText: "Mencari Pedagang kesukaanmu...",
+                        hintStyle: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFFB3B1B1)
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.to(() => HomePageDetailPedagang(docId: docId)),
+                    child: Container(
+                      padding: const EdgeInsets.all(9),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: primary),
+                        color: Colors.white
+                      ),
+                      child: Icon(
+                        Icons.search,
+                        color: primary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          bottomSheetTerpopular();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: primary),
+                            color: Colors.white
+                          ),
+                          child: Image.asset("assets/icon/award_menu.png", height: 40,),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text("Terpopular", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: primary),
+                          color: Colors.white
+                        ),
+                        child: Image.asset("assets/icon/location_menu.png", height: 40,),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text("Terdekat", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const SettingPageView(), arguments: docId);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: primary),
+                            color: Colors.white
+                          ),
+                          child: Image.asset("assets/icon/settings.png", height: 40,),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text("Pengaturan", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                    ],
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -389,6 +430,70 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  bottomSheetTerpopular() {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.all(15),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10)
+          )
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Terpopuler", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
+              const SizedBox(height: 20),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: controller.pedagangFavorit.length,
+                separatorBuilder: (context, index) => const SizedBox(height: 15), 
+                itemBuilder: (context, index) {
+                  List fotoPedagang = controller.pedagangFavorit[index]['foto_gerobak'];
+                  print(fotoPedagang);
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: primary)
+                    ),
+                    child: Row(
+                      children: [
+                        Image.network(fotoPedagang[0] , height: 50, width: 50,),
+                        const SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(controller.pedagangFavorit[index]['nama_gerobak'], style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: const [
+                                Icon(Icons.star, color: Colors.amber, size: 18,),
+                                SizedBox(width: 5),
+                                Text("5", style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(controller.pedagangFavorit[index]['alamat'], style: TextStyle(color: greyColor, fontSize: 12, fontWeight: FontWeight.w500),)
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                }, 
+              )
+            ],
+          ),
+        ),
+      )
     );
   }
 }

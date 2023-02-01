@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../chat/view/chat_page.dart';
@@ -16,12 +17,14 @@ class HomePageMenujuCustomer extends StatelessWidget {
   final String alamatPedagang;
   final List fotoGerobak;
   final String namaGerobak;
+  final String noTelp;
   const HomePageMenujuCustomer({
     required this.docId,
     required this.destination,
     required this.alamatPedagang,
     required this.fotoGerobak,
     required this.namaGerobak,
+    required this.noTelp,
     Key? key
   }) : super(key: key);
 
@@ -187,13 +190,18 @@ class HomePageMenujuCustomer extends StatelessWidget {
 
                                       Row(
                                         children: [
-                                          CircleAvatar(
-                                            backgroundColor: primary,
-                                            radius: 18,
-                                            child: const Icon(
-                                              Icons.phone,
-                                              color: Colors.white,
-                                              size: 18,
+                                          GestureDetector(
+                                            onTap: () async {
+                                              FlutterPhoneDirectCaller.callNumber('0$noTelp');
+                                            },
+                                            child: CircleAvatar(
+                                              backgroundColor: primary,
+                                              radius: 18,
+                                              child: const Icon(
+                                                Icons.phone,
+                                                color: Colors.white,
+                                                size: 18,
+                                              ),
                                             ),
                                           ),
                                           const SizedBox(width: 10),
@@ -222,7 +230,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                 GestureDetector( // button cancel
                                 onTap: () => Get.back(),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       color: danger,
@@ -250,7 +258,7 @@ class HomePageMenujuCustomer extends StatelessWidget {
                                 GestureDetector( // button Sampai Tujuan
                                   onTap: () => Get.offAll(() => HomepageSelesaiPemesanan(docId: docId,)),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       color: second,
