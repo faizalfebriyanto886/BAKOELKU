@@ -3,6 +3,7 @@ import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/screen/daftar/controller/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../../reusable_widget/custom_text_field.dart';
 
@@ -85,7 +86,7 @@ class RegisterPageGerobak extends StatelessWidget {
                                       Text(
                                         "Unggah Foto Gerobak",
                                         style: TextStyle(
-                                          color: Colors.grey[500],
+                                          color: Colors.grey[400],
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500
                                         ),
@@ -116,6 +117,76 @@ class RegisterPageGerobak extends StatelessWidget {
                           ),
                         )
                       ],
+                    ),
+
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              controller.selectTimeBuka(context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: primary, width: 2),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Iconsax.clock, color: primary,),
+                                  const SizedBox(width: 10),
+                                  Text("Jam Buka", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: primary),)
+                                ],
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.selectTimeTutup(context);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: primary, width: 2),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Iconsax.clock, color: primary,),
+                                  const SizedBox(width: 10),
+                                  Text("Jam Tutup", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: primary),)
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomTextFieldWithState(
+                        controller: controller.namaMenuController,
+                        color: primary, 
+                        hintText: "Isi Nama Menu kamu disini...", 
+                        prefix: Icon(Icons.shopping_cart, color: primary)
+                      )
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: CustomTextFieldWithState(
+                        controller: controller.hargaMenuController,
+                        color: primary, 
+                        hintText: "Isi Harga Menu kamu disini...", 
+                        prefix: Icon(Icons.shopping_cart, color: primary)
+                      )
                     ),
 
                     const SizedBox(height: 30),

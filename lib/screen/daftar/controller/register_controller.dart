@@ -17,11 +17,15 @@ class RegisterController extends GetxController {
   final noTelpController = TextEditingController();
   final alamatController = TextEditingController();
   final namaGerobakController = TextEditingController();
+  final namaMenuController = TextEditingController();
+  final hargaMenuController = TextEditingController();
   final roleController = ''.obs;
   final validationRole = false.obs;
   final ImagePicker picker = ImagePicker();
   File? urlImages;
   String urlImageStorage = '';
+  TimeOfDay timeBuka = TimeOfDay.now();
+  TimeOfDay timeTutup = TimeOfDay.now();
 
   clearRegisterData() {
     usernameController.clear();
@@ -59,7 +63,13 @@ class RegisterController extends GetxController {
           'nama_gerobak': namaGerobakController.text,
           'foto_gerobak': FieldValue.arrayUnion([
             urlImageStorage
-          ])
+          ]),
+          'jam_buka': timeBuka.format(context).toString(),
+          'jam_tutup': timeTutup.format(context).toString(),
+          'menu': [{
+            "harga": int.parse(hargaMenuController.text),
+            "nama": namaMenuController.text,
+          }]
         }).then((value) {
           clearRegisterData();
           CustomAlertDialogSuccess(
@@ -70,7 +80,9 @@ class RegisterController extends GetxController {
           Timer(const Duration(seconds: 3), () {
             Get.back();
             Get.back();
+            update();
           });
+          update();
         }).catchError((error) {
           CustomAlertDialogWarning(
             title: "Maaf",
@@ -193,7 +205,32 @@ class RegisterController extends GetxController {
     }
   }
 
-   Future<Position> getGeoLocationPosition() async {
+  void selectTimeBuka(BuildContext context) async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context,
+      initialTime: timeBuka,
+    );
+    if (newTime != null) {
+      timeBuka = newTime;
+      update();
+    }
+    update();
+  }
+
+  void selectTimeTutup(BuildContext context) async {
+    final TimeOfDay? newTime = await showTimePicker(
+      context: context, 
+      initialTime: timeTutup,
+    );
+
+    if (newTime != null) {
+      timeTutup = newTime;
+      update();
+    }
+    update();
+  }
+
+  Future<Position> getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 

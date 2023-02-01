@@ -27,6 +27,7 @@ class SettingController extends GetxController {
   final hargaMenuUbahController = TextEditingController();
 
   final storageImage = FirebaseStorage.instance;
+  final statusMenu = false.obs;
   CollectionReference collectionReferenceAuth = FirebaseFirestore.instance.collection('auth');
 
   // time variable
@@ -192,13 +193,25 @@ class SettingController extends GetxController {
     }
   }
 
-  addMenuTofirestore(BuildContext context) {
+  addMenuTofirestore(BuildContext context, String namaPedagang) async {
+    var rng = Random();
+    var angka = List.generate(1, (index) => rng.nextInt(10000));
+    var destionation = "Image_menu/$namaPedagang";
+
+    final refImage = FirebaseStorage.instance.ref(destionation).child('menu $angka');
+
+    await refImage.putFile(urlImages!);
+
+    String urlMenuImage = await refImage.getDownloadURL();
+
     if (namaMenuAddController.text.isNotEmpty && hargaMenuAddController.text.isNotEmpty) {
       FirebaseFirestore.instance.collection("auth").doc(uid).update({
         'menu': FieldValue.arrayUnion([
           {
+            "foto": urlMenuImage,
             "harga": int.parse(hargaMenuAddController.text),
-            "nama": namaMenuAddController.text
+            "nama": namaMenuAddController.text,
+            "status": statusMenu.value,
           }
         ])
       }).then((value) {
