@@ -1,5 +1,7 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
+import 'package:bakoelku/screen/history/view/history_page.dart';
+import 'package:bakoelku/screen/history/view/history_page_pedagang.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
 import 'package:bakoelku/screen/home_page/view/home_page_detail_pedagang.dart';
 import 'package:bakoelku/screen/main_page/view/main_page_view.dart';
@@ -166,70 +168,101 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          bottomSheetTerpopular();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: primary),
-                            color: Colors.white
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              bottomSheetTerpopular();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: primary),
+                                color: Colors.white
+                              ),
+                              child: Image.asset("assets/icon/award_menu.png", height: 40,),
+                            ),
                           ),
-                          child: Image.asset("assets/icon/award_menu.png", height: 40,),
-                        ),
+                          const SizedBox(height: 10),
+                          const Text("Terpopular", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      const Text("Terpopular", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: primary),
+                              color: Colors.white
+                            ),
+                            child: Image.asset("assets/icon/location_menu.png", height: 40,),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text("Terdekat", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => const SettingPageView(), arguments: docId);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: primary),
+                                color: Colors.white
+                              ),
+                              child: Image.asset("assets/icon/settings.png", height: 40,),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text("Pengaturan", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                        ],
+                      )
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  const SizedBox(height: 10),
+                  Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: primary),
-                          color: Colors.white
-                        ),
-                        child: Image.asset("assets/icon/location_menu.png", height: 40,),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => const HistoryPage());
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: primary),
+                                color: Colors.white
+                              ),
+                              child: Image.asset("assets/icon/riwayat_pesanan.png", height: 40,),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text("Riwayat", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      const Text("Terdekat", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
                     ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => const SettingPageView(), arguments: docId);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: primary),
-                            color: Colors.white
-                          ),
-                          child: Image.asset("assets/icon/settings.png", height: 40,),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text("Pengaturan", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),)
-                    ],
-                  )
                 ],
               ),
             )
@@ -347,30 +380,31 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Get.to(() => const NotifikasiPage());
                       },
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: primary,
-                            radius: 18,
-                            child: const Icon(
-                              Iconsax.notification5,
-                              color: Colors.white,
-                              size: 18,
-                            ),
-                          ),
-                          // Container(
-                          //   height: 10,
-                          //   width: 10,
-                          //   decoration: BoxDecoration(
-                          //     shape: BoxShape.circle,
-                          //     color: danger
-                          //   ),
-                          // ),
-                        ],
+                      child: CircleAvatar(
+                        backgroundColor: primary,
+                        radius: 18,
+                        child: const Icon(
+                          Iconsax.notification5,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => const HistoryPagePedagang());
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: primary,
+                        radius: 18,
+                        child: const Icon(
+                          Iconsax.task_square5,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ),
+                    ),
                     // GestureDetector(
                     //   onTap: () => Get.to(() => const ChatPagePedagangView()),
                     //   child: CircleAvatar(

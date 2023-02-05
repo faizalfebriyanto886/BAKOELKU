@@ -137,10 +137,6 @@ class HomeController extends GetxController {
     FirebaseFirestore.instance
     .collection("auth")
     .orderBy('nama_gerobak', descending: false)
-    // .startAt([fieldSearchController.text])
-    // .endAt(['${fieldSearchController.text}\uf8ff'])
-    // .where('nama_gerobak', isGreaterThanOrEqualTo: fieldSearchController.text)
-    // .where('nama_gerobak', isLessThan: fieldSearchController.text + 'z')
     .get()
     .then((value) {
       for (var element in value.docs) {
@@ -179,10 +175,4 @@ class HomeController extends GetxController {
       desiredAccuracy: LocationAccuracy.high,
     );
   }
-
-  List<String> imageCarousel = [
-    'assets/images/mart-dummy.png',
-    'assets/images/mart-dummy.png',
-    'assets/images/mart-dummy.png',
-  ];
 }

@@ -12,14 +12,14 @@ import '../controller/home_controller_detail_pedagang.dart';
 
 class HomePageDetailPedagang extends StatelessWidget {
   final String docId;
-  const HomePageDetailPedagang({
+  final controller = Get.put(HomeControllerDetailPedagang());
+  HomePageDetailPedagang({
     required this.docId,
     Key? key
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HomeControllerDetailPedagang());
     return Scaffold(
       body: FutureBuilder<DocumentSnapshot<Object?>>(
         future: controller.getDataUser(docId),
@@ -28,7 +28,6 @@ class HomePageDetailPedagang extends StatelessWidget {
             var dataUser = snapshot.data!.data() as Map<String, dynamic>;
             GeoPoint location = dataUser['latlong'];
             List fotoGerobak = dataUser['foto_gerobak'];
-            List menu = dataUser['menu'];
             return Stack(
               children: [
                 GetBuilder(
@@ -193,7 +192,7 @@ class HomePageDetailPedagang extends StatelessWidget {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        bottomSheetMenu(menu);
+                                        bottomSheetMenu(dataUser['uid']);
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -272,47 +271,52 @@ class HomePageDetailPedagang extends StatelessWidget {
     );
   }
 
-  bottomSheetMenu(List menuList) {
+  bottomSheetMenu(String uidPedagang) {
     Get.bottomSheet(
-      Container(
-        height: Get.height * 0.7,
-        width: Get.width,
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-           color: Colors.white
-        ),
-        child: ListView.separated(
-          itemCount: menuList.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-                border: Border.all(color: primary)
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Image.asset('assets/icon/icon_menu_2.png', height: 50)
+      GetBuilder<HomeControllerDetailPedagang>(
+        init: controller.getMenu(uidPedagang),
+        builder: (context) {
+          return Container(
+            height: Get.height * 0.7,
+            width: Get.width,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+               color: Colors.white
+            ),
+            child: ListView.separated(
+              itemCount: controller.menuPedagang.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    border: Border.all(color: primary)
                   ),
-                  const SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(menuList[index]['nama'], style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),),
-                      const SizedBox(height: 10),
-                      Text(menuList[index]['harga'].toString(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.green),)
+                      CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Image.network(controller.menuPedagang[index]['foto'], height: 50, width: 50,)
+                      ),
+                      const SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(controller.menuPedagang[index]['nama'], style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700),),
+                          const SizedBox(height: 10),
+                          Text(controller.menuPedagang[index]['harga'].toString(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.green),)
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
       )
     );
   }

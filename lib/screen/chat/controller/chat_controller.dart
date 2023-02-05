@@ -11,14 +11,8 @@ class ChatController extends GetxController {
 
   var args = Get.arguments;
 
-  // @override
-  // void onReady() {
-  //   getChat();
-  //   super.onReady();
-  // }
-
   getChat() {
-    collectionChat.where('uid_pedagang').get().then((value) {
+    collectionChat.where('uid_pedagang', isEqualTo: args).get().then((value) {
       for (var element in value.docs) {
         collectionChat.doc(element.data()['docId']).collection("pesan").orderBy('waktu', descending: false).get().then((valueChat) {
           for (var elementChat in valueChat.docs) {

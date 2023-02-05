@@ -13,12 +13,11 @@ class SettingPageMenuPedagang extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot<Object?>>(
-      stream: FirebaseFirestore.instance.collection("auth").doc(controller.uid).snapshots(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection("auth").doc(controller.uid).collection('menu').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var data = snapshot.data!.data() as Map<String, dynamic>;
-          List menuList = data['menu'];
+          final List<DocumentSnapshot> menuList = snapshot.data!.docs;
           return Scaffold(
             appBar: AppBar(
               elevation: 0,
@@ -36,7 +35,9 @@ class SettingPageMenuPedagang extends StatelessWidget {
               color: Colors.white,
               child: GestureDetector(
                 onTap: () {
-                  bottomSheetAddMenu(context, data['name']);
+                  // ignore: avoid_print
+                  print(controller.namaPedagang);
+                  bottomSheetAddMenu(context, controller.namaPedagang);
                 },
                 child: Container(
                   height: 45,
@@ -75,6 +76,7 @@ class SettingPageMenuPedagang extends StatelessWidget {
                     separatorBuilder: (context, index) => const SizedBox(height: 15,), 
                     itemBuilder: (context, index) {
                       return Dismissible(
+                        direction: DismissDirection.startToEnd,
                         key: const Key("Items"),
                         onDismissed: (direction) {},
                         confirmDismiss: (direction) {
@@ -86,7 +88,7 @@ class SettingPageMenuPedagang extends StatelessWidget {
                             buttons: [
                               DialogButton(
                                 onPressed: () {
-                                  controller.deleteMenuToFirestore(menuList[index]);
+                                  controller.deleteMenuToFirestore(menuList[index].id);
                                   Navigator.of(context).pop(true);
                                 },
                                 color: primary,
@@ -106,55 +108,45 @@ class SettingPageMenuPedagang extends StatelessWidget {
                             ],
                           ).show();
                         },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: menuList[index]['status'] == false ? greyColor.withOpacity(0.15) : Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: primary)
-                          ),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(menuList[index]['foto']),
-                                radius: 23,
-                              ),
-                              const SizedBox(width: 15),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(menuList[index]['nama'], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
-                                    const SizedBox(height: 8),
-                                    Text("Rp.${menuList[index]['harga'].toString()}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: greyColor),)
-                                  ],
+                        child: GestureDetector(
+                          onTap: () {
+                            bottomSheetUbahMenu(menuList[index].id, controller.namaPedagang);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: menuList[index]['status'] == false ? greyColor.withOpacity(0.15) : Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: primary)
+                            ),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: NetworkImage(menuList[index]['foto']),
+                                  radius: 23,
                                 ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: primary),
-                                  color: Colors.white
+                                const SizedBox(width: 15),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(menuList[index]['nama'], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
+                                      const SizedBox(height: 8),
+                                      Text("Rp.${menuList[index]['harga'].toString()}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: greyColor),)
+                                    ],
+                                  ),
                                 ),
-                                child: Text(menuList[index]['status'] == false ? "Habis" : "Tersedia", style: TextStyle(color: primary, fontWeight: FontWeight.w500),),
-                              )
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     bottomSheetUbahMenu();
-                              //     // controller.deleteMenuToFirestore(menuList[index]);
-                              //   },
-                              //   child: Container(
-                              //     height: 40,
-                              //     width: 40,
-                              //     decoration: BoxDecoration(
-                              //       color: primary,
-                              //       borderRadius: BorderRadius.circular(10),
-                              //     ),
-                              //     child: const Icon(Iconsax.edit_25, color: Colors.white, size: 18,),
-                              //   ),
-                              // )
-                            ],
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: primary),
+                                    color: Colors.white
+                                  ),
+                                  child: Text(menuList[index]['status'] == false ? "Habis" : "Tersedia", style: TextStyle(color: primary, fontWeight: FontWeight.w500),),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -172,10 +164,10 @@ class SettingPageMenuPedagang extends StatelessWidget {
     );
   }
 
-  bottomSheetUbahMenu() {
+  bottomSheetUbahMenu(String index, String namaPedagang) {
     Get.bottomSheet(
       Container(
-        height: Get.height * 0.3,
+        height: Get.height * 0.37,
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -212,26 +204,36 @@ class SettingPageMenuPedagang extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: primary),
-                        color: Colors.white
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        controller.statusMenu.value = true;
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: controller.statusMenu.value == false ? Colors.white : primary),
+                          color: Colors.white
+                        ),
+                        child: Text("Tersedia", style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w500),),
                       ),
-                      child: Text("Tersedia", style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w500),),
                     ),
                   ),
-                  GestureDetector(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: primary),
-                        color: Colors.white
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        controller.statusMenu.value = false;
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: controller.statusMenu.value == false ? primary : Colors.white),
+                          color: Colors.white
+                        ),
+                        child: Text("Habis", style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w500),),
                       ),
-                      child: Text("Habis", style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w500),),
                     ),
                   )
                 ],
@@ -239,7 +241,7 @@ class SettingPageMenuPedagang extends StatelessWidget {
               const SizedBox(height: 15),
               GestureDetector(
                 onTap: () {
-                  controller.ubahMenuToFirestore();
+                  controller.ubahMenuToFirestore(index: index, namaPedagang: namaPedagang);
                   Get.back();
                 },
                 child: Container(
@@ -270,7 +272,7 @@ class SettingPageMenuPedagang extends StatelessWidget {
   bottomSheetAddMenu(BuildContext context, String namaPedagang) {
     Get.bottomSheet(
       Container(
-        height: Get.height * 0.42,
+        height: Get.height * 0.44,
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -296,16 +298,19 @@ class SettingPageMenuPedagang extends StatelessWidget {
                       bottomSheetUploadImage(context);
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
+                      alignment: Alignment.center,
+                      width: Get.width * 0.88,
+                      height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(color: primary),
                         color: Colors.white
                       ),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset("assets/icon/upload-image.png", height: 40, width: 40),
-                          const SizedBox(width: 30),
+                          const SizedBox(width: 25),
                           Text(
                             "Tambahkan Gambar", 
                             style: TextStyle(
@@ -317,19 +322,6 @@ class SettingPageMenuPedagang extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  // const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: primary),
-                        shape: BoxShape.circle
-                      ),
-                      child: Icon(Icons.file_upload_outlined, color: primary,),
-                    )
                   ),
                 ],
               ),

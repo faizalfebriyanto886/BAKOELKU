@@ -36,16 +36,19 @@ class SettingController extends GetxController {
   var validationJamBuka = false.obs;
   var validationJamTutup = false.obs;
 
+  String namaPedagang = '';
+
   var uid = Get.arguments;
+
+  @override
+  void onInit() {
+    getPedagangMenu();
+    super.onInit();
+  }
   
   Future<DocumentSnapshot<Object?>> getSettings() async {
     DocumentReference docRef = firestore.collection("auth").doc(uid);
     return docRef.get();
-  }
-
-  Stream<DocumentSnapshot<Object?>> updateRealTime() {
-    DocumentReference realtime = firestore.collection("auth").doc(uid);
-    return realtime.snapshots();
   }
 
   ubahDataPedagang(BuildContext context) {
@@ -193,6 +196,13 @@ class SettingController extends GetxController {
     }
   }
 
+  getPedagangMenu() {
+    FirebaseFirestore.instance.collection("auth").doc(uid).get().then((value) {
+      namaPedagang = value.data()!['name'];
+      update();
+    });
+  }
+
   addMenuTofirestore(BuildContext context, String namaPedagang) async {
     var rng = Random();
     var angka = List.generate(1, (index) => rng.nextInt(10000));
@@ -205,15 +215,11 @@ class SettingController extends GetxController {
     String urlMenuImage = await refImage.getDownloadURL();
 
     if (namaMenuAddController.text.isNotEmpty && hargaMenuAddController.text.isNotEmpty) {
-      FirebaseFirestore.instance.collection("auth").doc(uid).update({
-        'menu': FieldValue.arrayUnion([
-          {
-            "foto": urlMenuImage,
-            "harga": int.parse(hargaMenuAddController.text),
-            "nama": namaMenuAddController.text,
-            "status": statusMenu.value,
-          }
-        ])
+      FirebaseFirestore.instance.collection('auth').doc(uid).collection('menu').add({
+        "foto": urlMenuImage,
+        "harga": int.parse(hargaMenuAddController.text),
+        "nama": namaMenuAddController.text,
+        "status": statusMenu.value,
       }).then((value) {
         hargaMenuAddController.clear();
         namaMenuAddController.clear();
@@ -226,25 +232,40 @@ class SettingController extends GetxController {
     } 
   }
 
-  deleteMenuToFirestore(var index) {
-    FirebaseFirestore.instance.collection("auth").doc(uid).update({
-      'menu': FieldValue.arrayRemove([index])
-    });
+  deleteMenuToFirestore(String index) {
+    FirebaseFirestore.instance.collection("auth").doc(uid).collection('menu').doc(index).delete();
     update();
   }
 
-  ubahMenuToFirestore() {
-    // FirebaseFirestore.instance.collection("auth").doc(uid).update({
-    //     'menu': FieldValue.arrayUnion([
-    //       {
-    //         "harga": int.parse(hargaMenuAddController.text),
-    //         "nama": namaMenuAddController.text
-    //       }
-    //     ])
-    //   })
-    FirebaseFirestore.instance.collection("auth").doc(uid).update({
-      // 'menu': ''
-    });
+  ubahMenuToFirestore({required String index, required String namaPedagang}) async {
+    if (namaMenuUbahController.text.isNotEmpty) {
+      FirebaseFirestore.instance.collection("auth").doc(uid).collection("menu").doc(index).update({
+        'nama': namaMenuUbahController.text,
+      }).then((value) {
+        namaMenuUbahController.clear();
+      });
+    } else if (hargaMenuUbahController.text.isNotEmpty) {
+      FirebaseFirestore.instance.collection("auth").doc(uid).collection("menu").doc(index).update({
+        'harga': hargaMenuUbahController.text,
+      }).then((value) {
+        hargaMenuUbahController.clear();
+      });
+    } else if (hargaMenuUbahController.text.isEmpty && namaMenuUbahController.text.isEmpty) {
+      FirebaseFirestore.instance.collection("auth").doc(uid).collection("menu").doc(index).update({
+        'status': statusMenu.value
+      });
+    } else if (hargaMenuUbahController.text.isNotEmpty && namaMenuUbahController.text.isNotEmpty && statusMenu.value) {
+      FirebaseFirestore.instance.collection("auth").doc(uid).collection("menu").doc(index).update({
+        // 'foto': urlMenuImage,
+        'harga': int.parse(hargaMenuUbahController.text),
+        'nama': namaMenuUbahController.text,
+        'status': statusMenu.value
+      }).then((value) {
+        hargaMenuUbahController.clear();
+        namaMenuUbahController.clear();
+        update();
+      });
+    }
   }
 
   void selectTimeBuka(BuildContext context) async {

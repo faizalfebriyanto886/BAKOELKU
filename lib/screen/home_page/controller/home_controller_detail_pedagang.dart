@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class HomeControllerDetailPedagang extends GetxController {
   final markers = <Marker>{}.obs;
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  List menuPedagang = [];
 
   @override
   void onInit() {
@@ -38,6 +39,16 @@ class HomeControllerDetailPedagang extends GetxController {
   Future<DocumentSnapshot<Object?>> getDataUser(String uid) {
     DocumentReference docRef = FirebaseFirestore.instance.collection("auth").doc(uid);
     return docRef.get();
+  }
+
+  getMenu(String uidPedagang) {
+    FirebaseFirestore.instance.collection('auth').doc(uidPedagang).collection('menu').get().then((value) {
+      for (var element in value.docs) {
+        menuPedagang.add(element.data());
+        update();
+      }
+    });
+    menuPedagang.clear();
   }
 
   tambahNotifikasi(String uidPedagang, String namaPembeli) {

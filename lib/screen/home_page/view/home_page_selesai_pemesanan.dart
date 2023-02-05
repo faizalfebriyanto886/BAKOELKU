@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../colors.dart';
 
 class HomepageSelesaiPemesanan extends StatelessWidget {
@@ -37,86 +38,7 @@ class HomepageSelesaiPemesanan extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 60),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // Get.to(() => const SettingPageView(), arguments: docId);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: primary),
-                                color: Colors.white
-                              ),
-                              child: Icon(
-                                Icons.settings,
-                                color: primary,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.65,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(9),
-                                filled: true,
-                                fillColor: Colors.white,
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(width: 1, color: primary),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(width: 1, color: primary),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(width: 1, color: primary),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1,)
-                                ),
-                                errorBorder: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1,color: Colors.black)
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                  borderSide: BorderSide(width: 1,color: primary)
-                                ),
-                                hintText: "Mencari Pedagang kesukaanmu...",
-                                hintStyle: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xFFB3B1B1)
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              padding: const EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: primary),
-                                color: Colors.white
-                              ),
-                              child: Icon(
-                                Icons.search,
-                                color: primary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    const SizedBox(),
 
                     // for Detail menu
                     Padding(
@@ -143,7 +65,79 @@ class HomepageSelesaiPemesanan extends StatelessWidget {
                             const SizedBox(height: 10),
                             Text(dataUser['nama_gerobak'], style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black),),
                             const SizedBox(height: 10),
+                            Obx(
+                              () => Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.rateController.value = 'kurang';
+                                      controller.update();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: danger),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: controller.rateController.value == 'kurang' ? danger.withOpacity(0.2) : Colors.white
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(Iconsax.emoji_sad5, color: danger, size: 16,),
+                                          const SizedBox(width: 5),
+                                          Text("Kurang", style: TextStyle(color: danger, fontSize: 14, fontWeight: FontWeight.w500),)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.rateController.value = 'cukup';
+                                      controller.update();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.amber),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: controller.rateController.value == 'cukup' ? Colors.amber.withOpacity(0.2) : Colors.white
+                                      ),
+                                      child: Row(
+                                        children: const [
+                                          Icon(Iconsax.emoji_normal5, color: Colors.amber, size: 16,),
+                                          SizedBox(width: 5),
+                                          Text("Cukup", style: TextStyle(color: Colors.amber, fontSize: 14, fontWeight: FontWeight.w500),)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.rateController.value = 'memuaskan';
+                                      controller.update();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: primary),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: controller.rateController.value == 'memuaskan' ? primary.withOpacity(0.2) : Colors.white
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(Iconsax.emoji_happy5, color: primary, size: 16,),
+                                          const SizedBox(width: 5),
+                                          Text("Memuaskan", style: TextStyle(color: primary, fontSize: 14, fontWeight: FontWeight.w500),)
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 10),
                             TextField(
+                              controller: controller.ulasanController,
                               minLines: 5,
                               maxLines: 7,
                               decoration: InputDecoration(
@@ -183,7 +177,18 @@ class HomepageSelesaiPemesanan extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             GestureDetector(
-                              onTap: () => Get.offAll(() => const MainPageView()),
+                              onTap: () {
+                                controller.addDataOrder(
+                                  dataUser['name'], 
+                                  dataUser['no_telp'], 
+                                  dataUser['alamat'], 
+                                  dataUser['nama_gerobak'], 
+                                  dataUser['foto_gerobak'][0].toString(),
+                                  dataUser['uid'],
+                                );
+                                controller.ulasanController.clear();
+                                 Get.offAll(() => const MainPageView());
+                              },
                               child: Container(
                                 height: 40,
                                 width: Get.width * 0.7,
