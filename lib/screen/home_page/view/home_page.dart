@@ -1,6 +1,5 @@
 import 'package:bakoelku/colors.dart';
 import 'package:bakoelku/reusable_widget/custom_loading_indicator.dart';
-import 'package:bakoelku/screen/chat/view/chat_page.dart';
 import 'package:bakoelku/screen/home_page/controller/home_controller.dart';
 import 'package:bakoelku/screen/home_page/view/home_page_detail_pedagang.dart';
 import 'package:bakoelku/screen/main_page/view/main_page_view.dart';
@@ -63,6 +62,7 @@ class HomePage extends StatelessWidget {
                       dataUser['nama_gerobak'], 
                       dataUser['alamat'], 
                       dataUser['foto_gerobak'],
+                      dataUser['no_telp'].toString(),
                       context
                     )
                   ],
@@ -96,6 +96,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(
                     width: Get.width * 0.65,
                     child: TextField(
+                      controller: controller.fieldSearchController,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(9),
                         filled: true,
@@ -130,10 +131,22 @@ class HomePage extends StatelessWidget {
                           color: Color(0xFFB3B1B1)
                         ),
                       ),
+                      onChanged: (value) {
+                        controller.valueSearchController.value = value;
+                        controller.update();
+                      },
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Get.to(() => HomePageDetailPedagang(docId: docId)),
+                    onTap: () {
+                      if (controller.fieldSearchController.text.isNotEmpty) {
+                        bottomSheetSearch();
+                        controller.fieldSearchController.clear();
+                        controller.pedagangSearch.clear();
+                      } else {
+                        const SizedBox();
+                      }
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
@@ -226,7 +239,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  dashboardPedagang(String namaGerobak, String alamat, List fotoGerobak, BuildContext context) {
+  dashboardPedagang(String namaGerobak, String alamat, List fotoGerobak, String noTelp, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -333,8 +346,6 @@ class HomePage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Get.to(() => const NotifikasiPage());
-                        // controller.updateNotifikasiStatus(docId);
-                        // controller.getNotifikasi(docId);
                       },
                       child: Stack(
                         alignment: Alignment.topRight,
@@ -360,18 +371,18 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    GestureDetector(
-                      onTap: () => Get.to(() => const ChatPageView()),
-                      child: CircleAvatar(
-                        backgroundColor: primary,
-                        radius: 18,
-                        child: const Icon(
-                          Icons.messenger,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                      ),
-                    )
+                    // GestureDetector(
+                    //   onTap: () => Get.to(() => const ChatPagePedagangView()),
+                    //   child: CircleAvatar(
+                    //     backgroundColor: primary,
+                    //     radius: 18,
+                    //     child: const Icon(
+                    //       Icons.messenger,
+                    //       color: Colors.white,
+                    //       size: 18,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )
               ],
@@ -457,35 +468,39 @@ class HomePage extends StatelessWidget {
                 separatorBuilder: (context, index) => const SizedBox(height: 15), 
                 itemBuilder: (context, index) {
                   List fotoPedagang = controller.pedagangFavorit[index]['foto_gerobak'];
-                  print(fotoPedagang);
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: primary)
-                    ),
-                    child: Row(
-                      children: [
-                        Image.network(fotoPedagang[0] , height: 50, width: 50,),
-                        const SizedBox(width: 15),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(controller.pedagangFavorit[index]['nama_gerobak'], style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),),
-                            const SizedBox(height: 5),
-                            Row(
-                              children: const [
-                                Icon(Icons.star, color: Colors.amber, size: 18,),
-                                SizedBox(width: 5),
-                                Text("5", style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(controller.pedagangFavorit[index]['alamat'], style: TextStyle(color: greyColor, fontSize: 12, fontWeight: FontWeight.w500),)
-                          ],
-                        )
-                      ],
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(() => HomePageDetailPedagang(docId: controller.pedagangFavorit[index]['uid']));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: primary)
+                      ),
+                      child: Row(
+                        children: [
+                          Image.network(fotoPedagang[0] , height: 50, width: 50,),
+                          const SizedBox(width: 15),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(controller.pedagangFavorit[index]['nama_gerobak'], style: const TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: const [
+                                  Icon(Icons.star, color: Colors.amber, size: 18,),
+                                  SizedBox(width: 5),
+                                  Text("5", style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),),
+                                ],
+                              ),
+                              const SizedBox(height: 5),
+                              Text(controller.pedagangFavorit[index]['alamat'], style: TextStyle(color: greyColor, fontSize: 12, fontWeight: FontWeight.w500),)
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 }, 
@@ -493,6 +508,160 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+      )
+    );
+  }
+
+  bottomSheetSearch() {
+    Get.bottomSheet(
+      GetBuilder<HomeController>(
+        init: controller.searchPedagang(),
+        builder: (_) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10)
+              )
+            ),
+            child: ListView.separated(
+              itemCount: controller.pedagangSearch.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 15),
+              itemBuilder: (context, index) {
+                if (controller.valueSearchController.value.isEmpty) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.off(HomePageDetailPedagang(docId: controller.pedagangSearch[index]['uid']));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: primary),
+                        color: Colors.white
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(color: primary)
+                            ),
+                            child: Image.asset("assets/icon/icon_menu_2.png", height: 50, width: 50),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(controller.pedagangSearch[index]['nama_gerobak'], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
+                                const SizedBox(height: 7),
+                                Row(
+                                  children: [
+                                    Icon(Iconsax.location5, color: greyColor, size: 16),
+                                    const SizedBox(width: 7),
+                                    Text(controller.pedagangSearch[index]['alamat'], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: greyColor),),
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Row(
+                                  children: [
+                                    Icon(Iconsax.call5, color: greyColor, size: 16),
+                                    const SizedBox(width: 7),
+                                    Text("0${controller.pedagangSearch[index]['no_telp'].toString()}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: greyColor),),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: primary),
+                              color: Colors.white
+                            ),
+                            child: Text("Buka : ${controller.pedagangSearch[index]['jam_buka']}", style: TextStyle(color: primary, fontSize: 12, fontWeight: FontWeight.normal),),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                if (controller.pedagangSearch[index]['nama_gerobak'].toString().toLowerCase().startsWith(controller.valueSearchController.value.toLowerCase())) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.off(HomePageDetailPedagang(docId: controller.pedagangSearch[index]['uid']));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: primary),
+                        color: Colors.white
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(color: primary)
+                            ),
+                            child: Image.asset("assets/icon/icon_menu_2.png", height: 50, width: 50),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(controller.pedagangSearch[index]['nama_gerobak'], style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),),
+                                const SizedBox(height: 7),
+                                Row(
+                                  children: [
+                                    Icon(Iconsax.location5, color: greyColor, size: 16),
+                                    const SizedBox(width: 7),
+                                    Text(controller.pedagangSearch[index]['alamat'], style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: greyColor),),
+                                  ],
+                                ),
+                                const SizedBox(height: 7),
+                                Row(
+                                  children: [
+                                    Icon(Iconsax.call5, color: greyColor, size: 16),
+                                    const SizedBox(width: 7),
+                                    Text("0${controller.pedagangSearch[index]['no_telp'].toString()}", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: greyColor),),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: primary),
+                              color: Colors.white
+                            ),
+                            child: Text("Buka : ${controller.pedagangSearch[index]['jam_buka']}", style: TextStyle(color: primary, fontSize: 12, fontWeight: FontWeight.normal),),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return Container();
+              }, 
+            ),
+          );
+        }
       )
     );
   }

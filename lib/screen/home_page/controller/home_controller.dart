@@ -14,8 +14,12 @@ class HomeController extends GetxController {
   final Set<Marker> markersPedagang = <Marker>{};
   final Completer<GoogleMapController> controllerCompleter = Completer();
   BitmapDescriptor markericon = BitmapDescriptor.defaultMarker;
+  final fieldSearchController = TextEditingController();
 
   List pedagangFavorit = [];
+  List pedagangSearch = [];
+
+  var valueSearchController = ''.obs;
 
   @override
   void onInit() {
@@ -34,9 +38,9 @@ class HomeController extends GetxController {
 
   listPedagangFavorit() {
     pedagangFirestore.where('role', isEqualTo: 'pedagang').get().then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         pedagangFavorit.add(element.data());
-      });
+      }
     });
   }
   
@@ -51,7 +55,7 @@ class HomeController extends GetxController {
             icon: markericon,
             draggable: true,
             onTap: () async {
-              Get.to(() => HomePageDetailPedagang(docId: element['uid']));
+              Get.to(() => HomePageDetailPedagang(docId: element['uid'])); // uid Pedagang
             },
           ),
         );
@@ -92,14 +96,6 @@ class HomeController extends GetxController {
     return docRef.get();
   }
 
-  // getNotifikasi(String uidPedagang) async {
-  //   FirebaseFirestore.instance.collection('notifikasi').where("uid_pedagang", isEqualTo: uidPedagang).get().then((value) {
-  //     value.docs.forEach((element) {
-  //       print(element.data()['notifikasi_status']);
-  //     });
-  //   });
-  // }
-
   updateNotifikasiStatus(String uidPedagang) async {
     FirebaseFirestore.instance.collection("notifikasi").where("uid_pedagang", isEqualTo: uidPedagang).get().then((value) {
       for (var element in value.docs) {
@@ -134,6 +130,23 @@ class HomeController extends GetxController {
         context: context
       );
       update();
+    });
+  }
+
+  searchPedagang() {
+    FirebaseFirestore.instance
+    .collection("auth")
+    .orderBy('nama_gerobak', descending: false)
+    // .startAt([fieldSearchController.text])
+    // .endAt(['${fieldSearchController.text}\uf8ff'])
+    // .where('nama_gerobak', isGreaterThanOrEqualTo: fieldSearchController.text)
+    // .where('nama_gerobak', isLessThan: fieldSearchController.text + 'z')
+    .get()
+    .then((value) {
+      for (var element in value.docs) {
+        pedagangSearch.add(element.data());
+        update();
+      }
     });
   }
 

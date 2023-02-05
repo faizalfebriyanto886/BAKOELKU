@@ -137,7 +137,7 @@ class HomePageDetailPedagang extends StatelessWidget {
                                           Row(
                                             children: [
                                               GestureDetector(
-                                                onTap: () => Get.to(() => const ChatPageView()),
+                                                onTap: () => Get.to(() => const ChatPageView(), arguments: docId),
                                                 child: CircleAvatar(
                                                   backgroundColor: primary,
                                                   radius: 22,

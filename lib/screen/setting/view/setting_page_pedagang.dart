@@ -101,7 +101,7 @@ class SettingPagePedagang extends StatelessWidget {
                                       bottomSheetUploadImage(context);
                                     },
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(color: primary),
@@ -129,11 +129,15 @@ class SettingPagePedagang extends StatelessWidget {
                                     onTap: () {
                                       controller.uploadToStorage(data['name'], data['nama_gerobak'], context);
                                     },
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      radius: 20,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: primary),
+                                        color: Colors.white
+                                      ),
                                       child: Icon(Icons.file_upload_outlined, color: primary,),
-                                    ),
+                                    )
                                   ),
                                 ],
                               ),

@@ -3,8 +3,8 @@ import 'package:bakoelku/screen/chat/controller/chat_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatPageView extends StatelessWidget {
-  const ChatPageView({Key? key}) : super(key: key);
+class ChatPagePedagangView extends StatelessWidget {
+  const ChatPagePedagangView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +37,9 @@ class ChatPageView extends StatelessWidget {
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     return  Row(
-                      mainAxisAlignment: controller.chatPedagang[index]['role'] == "pembeli" ? MainAxisAlignment.end : MainAxisAlignment.start,
+                      mainAxisAlignment: controller.chatPedagang[index]['role'] == "pedagang" ? MainAxisAlignment.end : MainAxisAlignment.start,
                       children: [
-                        controller.chatPedagang[index]['role'] == "pembeli"
+                        controller.chatPedagang[index]['role'] == "pedagang"
                         ? Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
@@ -117,7 +117,7 @@ class ChatPageView extends StatelessWidget {
                     const SizedBox(width: 20),
                     GestureDetector(
                       onTap: () {
-                        controller.sentMessagePembeli(context);
+                        controller.sentMessagePedagang(context);
                       },
                       child: Icon(Icons.send_rounded, color: primary, size: 30,),
                     ),
